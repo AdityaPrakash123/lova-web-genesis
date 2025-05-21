@@ -36,7 +36,7 @@ const BookingPage = () => {
         <div className="max-w-4xl mx-auto">
           <div 
             className="calendly-inline-widget" 
-            data-url="https://calendly.com/YOUR_CALENDLY_USERNAME"
+            data-url="https://calendly.com/danishaheed48"
             style={{ 
               minWidth: '320px', 
               height: '700px',
