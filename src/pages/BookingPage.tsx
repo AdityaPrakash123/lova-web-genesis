@@ -31,20 +31,41 @@ const BookingPage = () => {
         </div>
       </section>
       
-      {/* Calendly integration */}
       <section className="container-section">
-        <div className="max-w-4xl mx-auto">
-          <div 
-            className="calendly-inline-widget" 
-            data-url="https://calendly.com/danishaheed48"
-            style={{ 
-              minWidth: '320px', 
-              height: '700px',
-              border: '1px solid var(--border)',
-              borderRadius: '12px',
-              overflow: 'hidden'
-            }}
-          ></div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Calendly integration */}
+          <div>
+            <h2 className="text-2xl font-bold mb-6">Schedule a Call</h2>
+            <div 
+              className="calendly-inline-widget" 
+              data-url="https://calendly.com/danishaheed48"
+              style={{ 
+                minWidth: '320px', 
+                height: '700px',
+                border: '1px solid var(--border)',
+                borderRadius: '12px',
+                overflow: 'hidden'
+              }}
+            ></div>
+          </div>
+          
+          {/* Google Form integration */}
+          <div>
+            <h2 className="text-2xl font-bold mb-6">Have Questions?</h2>
+            <div className="border border-border rounded-lg overflow-hidden">
+              <iframe 
+                src="https://docs.google.com/forms/d/e/1FAIpQLSf3-nhJDlb51qQQT9EeOabMXrBX1TocEJVRFEGcVLd7c9bESA/viewform?embedded=true" 
+                width="100%" 
+                height="700" 
+                frameBorder="0" 
+                marginHeight={0} 
+                marginWidth={0}
+                className="bg-navy-dark"
+              >
+                Loading form...
+              </iframe>
+            </div>
+          </div>
         </div>
         
         <div className="text-center mt-8 text-sm text-muted-foreground">
