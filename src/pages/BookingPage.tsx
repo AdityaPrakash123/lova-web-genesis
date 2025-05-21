@@ -7,7 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { format } from 'date-fns';
-import { Calendar as CalendarIcon, Clock } from 'lucide-react';
+import { Calendar as CalendarIcon, Clock, Mail } from 'lucide-react';
 
 const timeSlots = [
   "9:00 AM", 
@@ -34,25 +34,120 @@ const BookingPage = () => {
   const [timeSlot, setTimeSlot] = useState<string | undefined>(undefined);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    businessName: '',
+    email: '',
+    service: ''
+  });
   
   React.useEffect(() => {
     document.title = "Book a Consultation - MARCS DiGITAL Solutions";
   }, []);
   
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+  const handleServiceChange = (value: string) => {
+    setFormData(prevData => ({
+      ...prevData,
+      service: value
+    }));
+  };
+  
+  const sendEmail = async () => {
+    try {
+      // In a real implementation, this would connect to an email sending service
+      // like SendGrid, AWS SES, or a custom backend API
+      
+      // Admin email notification
+      console.log('Sending admin notification to: danishaheed48@gmail.com');
+      
+      // User confirmation email
+      console.log('Sending confirmation email to:', formData.email);
+
+      // Email content for admin
+      const adminEmailContent = `
+        New Consultation Booking:
+        Name: ${formData.firstName} ${formData.lastName}
+        Business: ${formData.businessName}
+        Email: ${formData.email}
+        Service: ${formData.service}
+        Date: ${date ? format(date, 'PPP') : 'Not selected'}
+        Time: ${timeSlot || 'Not selected'}
+      `;
+      
+      // Email content for user
+      const userEmailContent = `
+        Dear ${formData.firstName},
+        
+        Thank you for booking a consultation with MARCS DiGITAL Solutions.
+        
+        Your booking details:
+        Service: ${formData.service}
+        Date: ${date ? format(date, 'PPP') : 'Not selected'}
+        Time: ${timeSlot || 'Not selected'}
+        
+        We're looking forward to speaking with you!
+        
+        Best regards,
+        The MARCS DiGITAL Solutions Team
+      `;
+
+      console.log('Admin email content:', adminEmailContent);
+      console.log('User email content:', userEmailContent);
+      
+      // For demo purposes, we're just logging the emails
+      // In production, you would integrate with an email service
+      
+      return true;
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      return false;
+    }
+  };
+  
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate API call/booking process
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
+    // Simulate API call/booking process and email sending
+    try {
+      // Wait for email send to complete
+      const emailSent = await sendEmail();
       
+      // Complete the booking process
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+        
+        if (emailSent) {
+          toast({
+            title: "Consultation booked!",
+            description: "We've sent you a confirmation email with all the details.",
+          });
+        } else {
+          toast({
+            title: "Consultation booked!",
+            description: "Your booking is confirmed, but there was an issue sending the email confirmation.",
+            variant: "destructive",
+          });
+        }
+      }, 1500);
+    } catch (error) {
+      setIsSubmitting(false);
       toast({
-        title: "Consultation booked!",
-        description: "We've sent you a confirmation email with all the details.",
+        title: "Something went wrong",
+        description: "We couldn't process your booking. Please try again.",
+        variant: "destructive",
       });
-    }, 1500);
+    }
   };
   
   if (isSubmitted) {
@@ -138,6 +233,8 @@ const BookingPage = () => {
                     placeholder="John" 
                     required 
                     className="bg-navy border-border"
+                    value={formData.firstName}
+                    onChange={handleChange}
                   />
                 </div>
                 
@@ -151,6 +248,8 @@ const BookingPage = () => {
                     placeholder="Doe" 
                     required 
                     className="bg-navy border-border"
+                    value={formData.lastName}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -165,6 +264,8 @@ const BookingPage = () => {
                   placeholder="Acme Corp" 
                   required 
                   className="bg-navy border-border"
+                  value={formData.businessName}
+                  onChange={handleChange}
                 />
               </div>
               
@@ -179,6 +280,8 @@ const BookingPage = () => {
                   placeholder="john.doe@example.com" 
                   required 
                   className="bg-navy border-border"
+                  value={formData.email}
+                  onChange={handleChange}
                 />
               </div>
               
@@ -186,7 +289,7 @@ const BookingPage = () => {
                 <label htmlFor="service" className="block text-sm font-medium">
                   Service Interest
                 </label>
-                <Select>
+                <Select onValueChange={handleServiceChange}>
                   <SelectTrigger className="bg-navy border-border">
                     <SelectValue placeholder="Select a service" />
                   </SelectTrigger>
@@ -276,7 +379,16 @@ const BookingPage = () => {
                   className="btn-primary w-full" 
                   disabled={!date || !timeSlot || isSubmitting}
                 >
-                  {isSubmitting ? "Processing..." : "Book Consultation"}
+                  {isSubmitting ? (
+                    <>
+                      <span className="mr-2">Processing...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Mail className="mr-2 h-4 w-4" />
+                      Book Consultation
+                    </>
+                  )}
                 </Button>
               </div>
               
