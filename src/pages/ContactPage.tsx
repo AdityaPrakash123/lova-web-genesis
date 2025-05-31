@@ -1,29 +1,11 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/hooks/use-toast';
+import ContactForm from '@/components/ContactForm';
 
 const ContactPage = () => {
-  const { toast } = useToast();
-  
   React.useEffect(() => {
     document.title = "Contact Us - MARCS DiGITAL Solutions";
   }, []);
-  
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Here you would typically handle form submission
-    
-    toast({
-      title: "Message sent!",
-      description: "We'll get back to you as soon as possible.",
-    });
-    
-    // Reset form
-    e.currentTarget.reset();
-  };
   
   return (
     <main className="min-h-screen">
@@ -91,84 +73,7 @@ const ContactPage = () => {
           
           {/* Contact Form */}
           <div className="order-1 lg:order-2">
-            <div className="bg-secondary/20 border border-border rounded-xl p-6 md:p-8">
-              <h2 className="text-2xl font-bold mb-6">Send a Message</h2>
-              
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label htmlFor="firstName" className="block text-sm font-medium">
-                      First Name
-                    </label>
-                    <Input 
-                      id="firstName" 
-                      name="firstName" 
-                      placeholder="John" 
-                      required 
-                      className="bg-navy border-border"
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <label htmlFor="lastName" className="block text-sm font-medium">
-                      Last Name
-                    </label>
-                    <Input 
-                      id="lastName" 
-                      name="lastName" 
-                      placeholder="Doe" 
-                      required 
-                      className="bg-navy border-border"
-                    />
-                  </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <label htmlFor="email" className="block text-sm font-medium">
-                    Email
-                  </label>
-                  <Input 
-                    id="email" 
-                    name="email" 
-                    type="email" 
-                    placeholder="john.doe@example.com" 
-                    required 
-                    className="bg-navy border-border"
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <label htmlFor="subject" className="block text-sm font-medium">
-                    Subject
-                  </label>
-                  <Input 
-                    id="subject" 
-                    name="subject" 
-                    placeholder="How can we help?" 
-                    required 
-                    className="bg-navy border-border"
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <label htmlFor="message" className="block text-sm font-medium">
-                    Message
-                  </label>
-                  <Textarea 
-                    id="message" 
-                    name="message" 
-                    placeholder="Tell us about your project or inquiry..." 
-                    rows={5} 
-                    required 
-                    className="bg-navy border-border"
-                  />
-                </div>
-                
-                <Button type="submit" className="btn-primary w-full">
-                  Send Message
-                </Button>
-              </form>
-            </div>
+            <ContactForm />
           </div>
         </div>
       </section>
