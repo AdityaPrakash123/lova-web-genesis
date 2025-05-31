@@ -14,7 +14,6 @@ const Navbar = () => {
   const menuItems = [
     { title: 'Home', path: '/' },
     { title: 'Services', path: '/services' },
-    { title: 'Testimonials', path: '/testimonials' },
     { title: 'Contact', path: '/contact' }
   ];
 
@@ -25,7 +24,7 @@ const Navbar = () => {
         <div className="flex items-center">
           <Link to="/" className="flex items-center gap-2">
             <span className="text-xl md:text-2xl font-bold text-foreground">
-              MARCS <span className="glow-text">DiGiTAL</span>
+              MARCS <span className="glow-text">DIGITAL SOLUTIONS</span>
             </span>
           </Link>
         </div>

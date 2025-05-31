@@ -34,9 +34,9 @@ const services = [
     description: "Improve your online visibility and attract more organic traffic. Our SEO experts use proven techniques to help your website rank higher in search results."
   },
   {
-    icon: "🛡️",
-    title: "Cybersecurity",
-    description: "Protect your business from digital threats with our comprehensive security solutions. We identify vulnerabilities and implement robust protection measures."
+    icon: "📦",
+    title: "Data Migration",
+    description: "Seamlessly transfer your data between systems with our secure migration services. We ensure data integrity and minimize downtime during the transition process."
   },
   {
     icon: "💼",
@@ -47,7 +47,7 @@ const services = [
 
 const ServicesPage = () => {
   React.useEffect(() => {
-    document.title = "Our Services - MARCS DiGITAL Solutions";
+    document.title = "Our Services - MARCS DIGITAL Solutions";
   }, []);
   
   return (

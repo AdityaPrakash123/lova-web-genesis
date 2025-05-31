@@ -12,7 +12,7 @@ const Footer = () => {
           {/* Logo and tagline */}
           <div className="md:col-span-2">
             <h3 className="text-xl font-bold mb-4">
-              MARCS <span className="glow-text">DiGiTAL</span>
+              MARCS <span className="glow-text">DIGITAL SOLUTIONS</span>
             </h3>
             <p className="text-muted-foreground max-w-sm">
               Your Problems. Our Solutions. We deliver digital transformation and technology services that drive innovation.
@@ -34,11 +34,6 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/testimonials" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Testimonials
-                </Link>
-              </li>
-              <li>
                 <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
                   Contact Us
                 </Link>
@@ -56,35 +51,27 @@ const Footer = () => {
             <h4 className="text-base font-semibold mb-4">Contact Us</h4>
             <ul className="space-y-3">
               <li className="text-muted-foreground">
-                Email: <a href="mailto:contact@marcsdigital.com" className="hover:text-foreground transition-colors">
-                  contact@marcsdigital.com
+                Email: <a href="mailto:info@marcsdigitalsolutions.com" className="hover:text-foreground transition-colors">
+                  info@marcsdigitalsolutions.com
                 </a>
               </li>
               <li className="text-muted-foreground">
-                Phone: <a href="tel:+11234567890" className="hover:text-foreground transition-colors">
-                  +1 (123) 456-7890
+                Phone: <a href="tel:+18444406518" className="hover:text-foreground transition-colors">
+                  +1 (844) 440-6518
                 </a>
               </li>
               <li className="text-muted-foreground">
-                Address: 123 Tech Avenue, Digital City, DC 12345
+                Address: 505 Albert Street, Kingston ON K7K 4M5, Canada
               </li>
             </ul>
           </div>
         </div>
         
         {/* Copyright */}
-        <div className="mt-12 pt-6 border-t border-border/40 flex flex-col md:flex-row justify-between gap-4">
+        <div className="mt-12 pt-6 border-t border-border/40">
           <p className="text-sm text-muted-foreground">
-            © {currentYear} MARCS DiGITAL Solutions. All rights reserved.
+            © {currentYear} MARCS DIGITAL Solutions. All rights reserved.
           </p>
-          <div className="flex gap-6">
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground">
-              Privacy Policy
-            </a>
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground">
-              Terms of Service
-            </a>
-          </div>
         </div>
       </div>
     </footer>

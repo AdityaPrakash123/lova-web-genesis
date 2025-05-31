@@ -95,6 +95,7 @@ const ContactForm = () => {
               <SelectItem value="digital-marketing">Digital Marketing</SelectItem>
               <SelectItem value="seo-optimization">SEO Optimization</SelectItem>
               <SelectItem value="e-commerce-solutions">E-commerce Solutions</SelectItem>
+              <SelectItem value="data-migration">Data Migration</SelectItem>
               <SelectItem value="consulting">Consulting</SelectItem>
               <SelectItem value="other">Other</SelectItem>
             </SelectContent>

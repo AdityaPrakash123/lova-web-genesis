@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 
 const BookingPage = () => {
   useEffect(() => {
-    document.title = "Book a Consultation - MARCS DiGITAL Solutions";
+    document.title = "Book a Consultation - MARCS DIGITAL Solutions";
     
     // Initialize Calendly widget
     const script = document.createElement('script');
@@ -36,7 +36,7 @@ const BookingPage = () => {
         <div className="max-w-4xl mx-auto">
           <div 
             className="calendly-inline-widget" 
-            data-url="https://calendly.com/danishaheed48"
+            data-url="https://calendly.com/marcsdigitalsolutions-info"
             style={{ 
               minWidth: '320px', 
               height: '700px',
@@ -45,14 +45,6 @@ const BookingPage = () => {
               overflow: 'hidden'
             }}
           ></div>
-        </div>
-        
-        <div className="text-center mt-8 text-sm text-muted-foreground">
-          <p>
-            By booking a consultation, you agree to our{" "}
-            <a href="#" className="text-teal hover:underline">privacy policy</a> and{" "}
-            <a href="#" className="text-teal hover:underline">terms of service</a>.
-          </p>
         </div>
       </section>
     </main>

@@ -4,7 +4,7 @@ import ContactForm from '@/components/ContactForm';
 
 const ContactPage = () => {
   React.useEffect(() => {
-    document.title = "Contact Us - MARCS DiGITAL Solutions";
+    document.title = "Contact Us - MARCS DIGITAL Solutions";
   }, []);
   
   return (
@@ -33,10 +33,10 @@ const ContactPage = () => {
                 <h3 className="text-lg font-semibold mb-2">Email</h3>
                 <p className="text-muted-foreground">
                   <a 
-                    href="mailto:contact@marcsdigital.com" 
+                    href="mailto:info@marcsdigitalsolutions.com" 
                     className="hover:text-teal transition-colors"
                   >
-                    contact@marcsdigital.com
+                    info@marcsdigitalsolutions.com
                   </a>
                 </p>
               </div>
@@ -45,10 +45,10 @@ const ContactPage = () => {
                 <h3 className="text-lg font-semibold mb-2">Phone</h3>
                 <p className="text-muted-foreground">
                   <a 
-                    href="tel:+11234567890" 
+                    href="tel:+18444406518" 
                     className="hover:text-teal transition-colors"
                   >
-                    +1 (123) 456-7890
+                    +1 (844) 440-6518
                   </a>
                 </p>
               </div>
@@ -56,9 +56,9 @@ const ContactPage = () => {
               <div>
                 <h3 className="text-lg font-semibold mb-2">Address</h3>
                 <p className="text-muted-foreground">
-                  123 Tech Avenue<br />
-                  Digital City, DC 12345<br />
-                  United States
+                  505 Albert Street<br />
+                  Kingston ON K7K 4M5<br />
+                  Canada
                 </p>
               </div>
             </div>
