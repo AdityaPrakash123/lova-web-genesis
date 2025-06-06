@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import VoiceInput from '@/components/VoiceInput';
 
 const ContactForm = () => {
   const [state, handleSubmit] = useForm("mzzrwqyv");
@@ -61,7 +60,7 @@ MARCS Digital Solutions`);
   
   if (state.succeeded) {
     return (
-      <div className="text-center p-8 bg-secondary/20 border border-border rounded-xl">
+      <div className="text-center p-8 bg-secondary/20 border border-border rounded-xl animate-fade-in">
         <h3 className="text-xl font-semibold mb-2">Thank you!</h3>
         <p className="text-muted-foreground">We've received your message and will get back to you soon. You should also receive a confirmation email shortly.</p>
         <p className="text-sm text-muted-foreground mt-4">Redirecting you to book a consultation...</p>
@@ -70,8 +69,14 @@ MARCS Digital Solutions`);
   }
 
   return (
-    <div className="bg-secondary/20 border border-border rounded-xl p-6 md:p-8">
-      <h2 className="text-2xl font-bold mb-6">Contact Us</h2>
+    <div className="bg-secondary/20 border border-border rounded-xl p-6 md:p-8 animate-fade-in">
+      <div className="flex items-center gap-3 mb-6">
+        <h2 className="text-2xl font-bold">Contact Us</h2>
+        <div className="flex items-center gap-2 text-sm text-teal bg-teal/10 px-3 py-1 rounded-full">
+          <div className="w-2 h-2 bg-teal rounded-full animate-pulse"></div>
+          Voice Enabled
+        </div>
+      </div>
       
       <form onSubmit={onSubmit} className="space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -79,14 +84,14 @@ MARCS Digital Solutions`);
             <label htmlFor="firstName" className="block text-sm font-medium">
               First Name
             </label>
-            <Input 
-              id="firstName" 
-              name="firstName" 
-              placeholder="John" 
-              required 
-              className="bg-navy border-border"
+            <VoiceInput
+              id="firstName"
+              name="firstName"
+              placeholder="John"
               value={formData.firstName}
-              onChange={(e) => handleInputChange('firstName', e.target.value)}
+              onChange={(value) => handleInputChange('firstName', value)}
+              className="bg-navy border-border"
+              required
             />
             <ValidationError 
               prefix="First Name" 
@@ -99,14 +104,14 @@ MARCS Digital Solutions`);
             <label htmlFor="lastName" className="block text-sm font-medium">
               Last Name
             </label>
-            <Input 
-              id="lastName" 
-              name="lastName" 
-              placeholder="Doe" 
-              required 
-              className="bg-navy border-border"
+            <VoiceInput
+              id="lastName"
+              name="lastName"
+              placeholder="Doe"
               value={formData.lastName}
-              onChange={(e) => handleInputChange('lastName', e.target.value)}
+              onChange={(value) => handleInputChange('lastName', value)}
+              className="bg-navy border-border"
+              required
             />
             <ValidationError 
               prefix="Last Name" 
@@ -120,15 +125,14 @@ MARCS Digital Solutions`);
           <label htmlFor="email" className="block text-sm font-medium">
             Email Address
           </label>
-          <Input 
-            id="email" 
-            type="email" 
-            name="email" 
-            placeholder="john.doe@example.com" 
-            required 
-            className="bg-navy border-border"
+          <VoiceInput
+            id="email"
+            name="email"
+            placeholder="john.doe@example.com"
             value={formData.email}
-            onChange={(e) => handleInputChange('email', e.target.value)}
+            onChange={(value) => handleInputChange('email', value)}
+            className="bg-navy border-border"
+            required
           />
           <ValidationError 
             prefix="Email" 
@@ -172,15 +176,15 @@ MARCS Digital Solutions`);
           <label htmlFor="message" className="block text-sm font-medium">
             Message
           </label>
-          <Textarea 
-            id="message" 
-            name="message" 
-            placeholder="Tell us about your project or inquiry..." 
-            rows={5} 
-            required 
-            className="bg-navy border-border"
+          <VoiceInput
+            id="message"
+            name="message"
+            type="textarea"
+            placeholder="Tell us about your project or inquiry..."
             value={formData.message}
-            onChange={(e) => handleInputChange('message', e.target.value)}
+            onChange={(value) => handleInputChange('message', value)}
+            className="bg-navy border-border"
+            required
           />
           <ValidationError 
             prefix="Message" 
@@ -192,9 +196,11 @@ MARCS Digital Solutions`);
         <Button 
           type="submit" 
           disabled={state.submitting} 
-          className="btn-primary w-full"
+          className="btn-primary w-full group transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-teal/25"
         >
-          {state.submitting ? 'Submitting...' : 'Submit'}
+          <span className="group-hover:scale-110 transition-transform duration-200">
+            {state.submitting ? 'Submitting...' : 'Submit'}
+          </span>
         </Button>
       </form>
     </div>

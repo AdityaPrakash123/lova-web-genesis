@@ -39,7 +39,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border transition-colors duration-200;
   }
   
   body {
@@ -70,15 +70,65 @@
   h4 {
     @apply text-xl md:text-2xl;
   }
+
+  /* Page transition styles */
+  .page-transition {
+    animation: pageSlideIn 0.6s ease-out;
+  }
+
+  @keyframes pageSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Enhanced button hover effects */
+  button {
+    @apply transition-all duration-300;
+  }
+
+  /* Link hover effects */
+  a {
+    @apply transition-all duration-300;
+  }
+
+  a:hover {
+    @apply scale-105;
+  }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-gradient-to-br from-teal to-cyan text-primary-foreground px-6 py-3 rounded-md font-medium hover:from-teal-dark hover:to-cyan-dark transition-all;
+    @apply bg-gradient-to-br from-teal to-cyan text-primary-foreground px-6 py-3 rounded-md font-medium relative overflow-hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-primary::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 transition-opacity duration-300;
+  }
+  
+  .btn-primary:hover::before {
+    @apply opacity-100;
+  }
+  
+  .btn-primary:hover {
+    @apply from-teal-dark to-cyan-dark shadow-xl shadow-teal/30 scale-105;
+    transform: translateY(-2px) scale(1.05);
+  }
+
+  .btn-primary:active {
+    @apply scale-95;
+    transform: translateY(0) scale(0.95);
   }
   
   .container-section {
-    @apply container max-w-7xl mx-auto px-4 py-16 md:py-24;
+    @apply container max-w-7xl mx-auto px-4 py-16 md:py-24 page-transition;
   }
   
   .grid-pattern {
@@ -88,7 +138,12 @@
   }
   
   .glow-card {
-    @apply relative overflow-hidden border border-teal/20 bg-secondary/80 backdrop-blur-sm;
+    @apply relative overflow-hidden border border-teal/20 bg-secondary/80 backdrop-blur-sm transition-all duration-500;
+  }
+
+  .glow-card:hover {
+    @apply border-teal/40 shadow-2xl shadow-teal/20 scale-105;
+    transform: translateY(-8px) scale(1.02);
   }
   
   .glow-card::before {
@@ -99,5 +154,30 @@
   
   .glow-text {
     @apply text-transparent bg-clip-text bg-gradient-to-r from-teal to-cyan;
+  }
+
+  /* Enhanced input styles */
+  input, textarea, select {
+    @apply transition-all duration-300;
+  }
+
+  input:focus, textarea:focus {
+    @apply scale-[1.02] shadow-lg shadow-teal/20;
+  }
+
+  /* Voice navigation pulse effect */
+  .voice-pulse {
+    animation: voicePulse 2s infinite;
+  }
+
+  @keyframes voicePulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.8;
+    }
   }
 }

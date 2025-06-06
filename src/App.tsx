@@ -11,6 +11,7 @@ import BookingPage from "./pages/BookingPage";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import VoiceNavigation from "./components/VoiceNavigation";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
+          <VoiceNavigation />
         </div>
       </BrowserRouter>
     </TooltipProvider>
