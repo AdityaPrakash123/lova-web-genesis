@@ -6,6 +6,35 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/hooks/use-toast';
 
+interface SpeechRecognitionEvent extends Event {
+  results: SpeechRecognitionResultList;
+  resultIndex: number;
+}
+
+interface SpeechRecognitionError extends Event {
+  error: string;
+}
+
+interface SpeechRecognition extends EventTarget {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  start(): void;
+  stop(): void;
+  abort(): void;
+  addEventListener(type: 'result', listener: (event: SpeechRecognitionEvent) => void): void;
+  addEventListener(type: 'error', listener: (event: SpeechRecognitionError) => void): void;
+  addEventListener(type: 'start', listener: () => void): void;
+  addEventListener(type: 'end', listener: () => void): void;
+}
+
+declare global {
+  interface Window {
+    SpeechRecognition: new () => SpeechRecognition;
+    webkitSpeechRecognition: new () => SpeechRecognition;
+  }
+}
+
 interface VoiceInputProps {
   value: string;
   onChange: (value: string) => void;
@@ -44,25 +73,25 @@ const VoiceInput: React.FC<VoiceInputProps> = ({
     recognition.interimResults = false;
     recognition.lang = 'en-US';
 
-    recognition.onstart = () => {
+    recognition.addEventListener('start', () => {
       setIsListening(true);
       toast({ title: '🎤 Listening...', description: 'Speak now to fill this field' });
-    };
+    });
 
-    recognition.onresult = (event: any) => {
+    recognition.addEventListener('result', (event: SpeechRecognitionEvent) => {
       const transcript = event.results[0][0].transcript;
       onChange(value + (value ? ' ' : '') + transcript);
       toast({ title: '✅ Voice captured', description: 'Text has been added to the field' });
-    };
+    });
 
-    recognition.onerror = (event: any) => {
+    recognition.addEventListener('error', (event: SpeechRecognitionError) => {
       console.error('Speech recognition error:', event.error);
       toast({ title: 'Voice error', description: 'Could not recognize speech. Please try again.' });
-    };
+    });
 
-    recognition.onend = () => {
+    recognition.addEventListener('end', () => {
       setIsListening(false);
-    };
+    });
 
     recognition.start();
   }, [value, onChange]);
