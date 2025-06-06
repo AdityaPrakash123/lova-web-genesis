@@ -62,13 +62,6 @@ const ContactPage = () => {
                 </p>
               </div>
             </div>
-            
-            {/* Map embed placeholder - in a real project, this would be an actual map integration */}
-            <div className="mt-8 rounded-lg overflow-hidden border border-border h-64 bg-secondary/20">
-              <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                Map Embed Would Go Here
-              </div>
-            </div>
           </div>
           
           {/* Contact Form */}
