@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,12 +8,49 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 const ContactForm = () => {
   const [state, handleSubmit] = useForm("mzzrwqyv");
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    service: '',
+    message: ''
+  });
+  
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+    // Create the form data with additional fields for Formspree
+    const submitData = new FormData(e.currentTarget);
+    
+    // Add customer confirmation email details
+    submitData.append('_autoresponse', `Hi ${formData.firstName},
+
+Thank you for reaching out to MARCS Digital Solutions. We're eager to learn more about your project and discuss how our team can help.
+
+If you haven't booked a meeting yet, please choose a convenient time here: ${window.location.origin}/book
+
+Looking forward to speaking with you!
+
+Best regards,
+MARCS Digital Solutions`);
+    
+    // Add business notification email
+    submitData.append('_cc', 'info@marcsdigitalsolutions.com');
+    submitData.append('_subject', 'New Contact Form Submission from MARCS Digital Solutions Website');
+    
+    // Submit the form
+    await handleSubmit(submitData);
+  };
   
   if (state.succeeded) {
     return (
       <div className="text-center p-8 bg-secondary/20 border border-border rounded-xl">
         <h3 className="text-xl font-semibold mb-2">Thank you!</h3>
-        <p className="text-muted-foreground">We've received your message and will get back to you soon.</p>
+        <p className="text-muted-foreground">We've received your message and will get back to you soon. You should also receive a confirmation email shortly.</p>
       </div>
     );
   }
@@ -22,7 +59,7 @@ const ContactForm = () => {
     <div className="bg-secondary/20 border border-border rounded-xl p-6 md:p-8">
       <h2 className="text-2xl font-bold mb-6">Contact Us</h2>
       
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={onSubmit} className="space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
             <label htmlFor="firstName" className="block text-sm font-medium">
@@ -34,6 +71,8 @@ const ContactForm = () => {
               placeholder="John" 
               required 
               className="bg-navy border-border"
+              value={formData.firstName}
+              onChange={(e) => handleInputChange('firstName', e.target.value)}
             />
             <ValidationError 
               prefix="First Name" 
@@ -52,6 +91,8 @@ const ContactForm = () => {
               placeholder="Doe" 
               required 
               className="bg-navy border-border"
+              value={formData.lastName}
+              onChange={(e) => handleInputChange('lastName', e.target.value)}
             />
             <ValidationError 
               prefix="Last Name" 
@@ -72,6 +113,8 @@ const ContactForm = () => {
             placeholder="john.doe@example.com" 
             required 
             className="bg-navy border-border"
+            value={formData.email}
+            onChange={(e) => handleInputChange('email', e.target.value)}
           />
           <ValidationError 
             prefix="Email" 
@@ -84,7 +127,11 @@ const ContactForm = () => {
           <label htmlFor="service" className="block text-sm font-medium">
             Service of Interest
           </label>
-          <Select name="service" required>
+          <Select 
+            name="service" 
+            required
+            onValueChange={(value) => handleInputChange('service', value)}
+          >
             <SelectTrigger className="bg-navy border-border">
               <SelectValue placeholder="Select a service" />
             </SelectTrigger>
@@ -118,6 +165,8 @@ const ContactForm = () => {
             rows={5} 
             required 
             className="bg-navy border-border"
+            value={formData.message}
+            onChange={(e) => handleInputChange('message', e.target.value)}
           />
           <ValidationError 
             prefix="Message" 

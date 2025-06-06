@@ -13,7 +13,7 @@ const ContactPage = () => {
       <section className="bg-navy-dark py-16 md:py-24">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="mb-6">Contact Us</h1>
+            <h1 className="mb-6">How can we help you?</h1>
             <p className="text-xl text-muted-foreground">
               Have questions or ready to start your digital transformation journey? Reach out to our team.
             </p>
