@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -8,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 const ContactForm = () => {
   const [state, handleSubmit] = useForm("mzzrwqyv");
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -45,12 +47,24 @@ MARCS Digital Solutions`);
     // Submit the form
     await handleSubmit(submitData);
   };
+
+  // Redirect to booking page after successful submission
+  React.useEffect(() => {
+    if (state.succeeded) {
+      const timer = setTimeout(() => {
+        navigate('/book');
+      }, 2000); // Wait 2 seconds to show success message before redirecting
+
+      return () => clearTimeout(timer);
+    }
+  }, [state.succeeded, navigate]);
   
   if (state.succeeded) {
     return (
       <div className="text-center p-8 bg-secondary/20 border border-border rounded-xl">
         <h3 className="text-xl font-semibold mb-2">Thank you!</h3>
         <p className="text-muted-foreground">We've received your message and will get back to you soon. You should also receive a confirmation email shortly.</p>
+        <p className="text-sm text-muted-foreground mt-4">Redirecting you to book a consultation...</p>
       </div>
     );
   }
