@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useDebouncedMouse } from '@/hooks/useScrollReveal';
+import { Ear, Target, Zap } from 'lucide-react';
 
 const KineticText = ({ children }: { children: string }) => {
   return (
@@ -13,6 +14,28 @@ const KineticText = ({ children }: { children: string }) => {
         </span>
       ))}
     </span>
+  );
+};
+
+const ValueCard = ({ icon: Icon, title, description, delay }: { 
+  icon: any; 
+  title: string; 
+  description: string; 
+  delay: number;
+}) => {
+  return (
+    <div 
+      className="glass-card p-6 text-center group hover:scale-105 transition-all duration-300 animate-fade-in"
+      style={{ animationDelay: `${delay}s` }}
+    >
+      <div className="mb-4 flex justify-center">
+        <div className="p-3 rounded-full bg-accent/20 group-hover:bg-accent/30 transition-colors">
+          <Icon className="h-8 w-8 text-accent" />
+        </div>
+      </div>
+      <h3 className="text-xl font-bold mb-3 glow-text">{title}</h3>
+      <p className="text-muted-foreground">{description}</p>
+    </div>
   );
 };
 
@@ -74,37 +97,40 @@ const Hero = () => {
           {/* Our Values section */}
           <div className="mb-12 animate-fade-in" style={{ animationDelay: '0.3s' }}>
             <h2 className="text-2xl md:text-3xl mb-4 text-foreground font-bold">Our Values</h2>
-            <p className="text-xl md:text-2xl mb-4 text-foreground font-medium leading-relaxed">
+            <p className="text-xl md:text-2xl mb-8 text-foreground font-medium leading-relaxed">
               We Listen. We Tailor. We Deliver.
             </p>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-muted-foreground mb-12">
               Listening to your challenges, crafting personalized solutions, and helping you put them into action.
             </p>
-          </div>
 
-          {/* Stats grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 w-full max-w-5xl animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            <div className="glass-card p-6 text-center">
-              <div className="text-4xl md:text-5xl font-bold glow-text mb-2">90%</div>
-              <div className="text-lg font-semibold text-foreground mb-2">Reduction in AI deployment time</div>
-              <div className="text-sm text-muted-foreground">Deploy faster and more efficiently</div>
-            </div>
-            <div className="glass-card p-6 text-center">
-              <div className="text-4xl md:text-5xl font-bold glow-text mb-2">85%</div>
-              <div className="text-lg font-semibold text-foreground mb-2">Improvement in enterprise AI adoption rates</div>
-              <div className="text-sm text-muted-foreground">Better implementation equals better adoption</div>
-            </div>
-            <div className="glass-card p-6 text-center">
-              <div className="text-4xl md:text-5xl font-bold glow-text mb-2">75%</div>
-              <div className="text-lg font-semibold text-foreground mb-2">Decrease in AI operational costs</div>
-              <div className="text-sm text-muted-foreground">More efficient, less expensive</div>
+            {/* Interactive Values Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 w-full max-w-4xl">
+              <ValueCard
+                icon={Ear}
+                title="We Listen"
+                description="Your challenges become our mission. We dive deep to understand your unique needs and pain points."
+                delay={0.4}
+              />
+              <ValueCard
+                icon={Target}
+                title="We Tailor"
+                description="No cookie-cutter solutions. Every strategy is crafted specifically for your business goals."
+                delay={0.5}
+              />
+              <ValueCard
+                icon={Zap}
+                title="We Deliver"
+                description="From concept to execution, we turn ideas into reality with speed and precision."
+                delay={0.6}
+              />
             </div>
           </div>
           
-          <div className="animate-fade-in" style={{ animationDelay: '0.5s' }}>
+          <div className="animate-fade-in" style={{ animationDelay: '0.7s' }}>
             <Link to="/book">
               <Button className="btn-primary holographic-border text-lg px-8 py-4">
-                Let's Talk
+                Start the Conversation
               </Button>
             </Link>
           </div>
