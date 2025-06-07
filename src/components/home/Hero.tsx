@@ -16,25 +16,6 @@ const KineticText = ({ children }: { children: string }) => {
   );
 };
 
-const TechTicker = () => {
-  const techTerms = ['AI Solutions', 'Low Code Platforms', 'Workflow Automations', 'Web3 Integration', 'Cloud Architecture', 'Digital Transformation'];
-  
-  return (
-    <div className="relative overflow-hidden w-full py-4 mt-8">
-      <div className="tech-ticker">
-        {techTerms.map((term, index) => (
-          <React.Fragment key={index}>
-            <span className="text-xl font-medium text-muted-foreground whitespace-nowrap">
-              {term}
-            </span>
-            <span className="text-2xl text-accent">•</span>
-          </React.Fragment>
-        ))}
-      </div>
-    </div>
-  );
-};
-
 const Hero = () => {
   const mousePosition = useDebouncedMouse(150);
   const [shouldAnimate, setShouldAnimate] = useState(true);
@@ -78,30 +59,52 @@ const Hero = () => {
       )}
       
       <div className="container max-w-7xl mx-auto px-4 relative z-10">
-        <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-          <h1 className="mb-6 animate-fade-in">
-            Transform Your Business with{" "}
-            <span className="block mt-2 glow-text">
-              <KineticText>MARCS DiGITAL</KineticText>
+        <div className="flex flex-col items-center text-center max-w-5xl mx-auto">
+          <h1 className="mb-6 animate-fade-in text-4xl md:text-6xl lg:text-7xl font-bold">
+            <span className="text-foreground">AI-Assisted, </span>
+            <span className="glow-text">
+              <KineticText>Human Empowered.</KineticText>
             </span>
           </h1>
           
-          <p className="text-xl md:text-2xl mb-8 text-muted-foreground max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            Your Problems. Our Solutions.
+          <p className="text-lg md:text-xl mb-8 text-muted-foreground max-w-3xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            The perfect balance of automation and expertise.
           </p>
+
+          {/* Hero message inspired by your copy */}
+          <div className="mb-12 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <p className="text-xl md:text-2xl mb-4 text-foreground font-medium leading-relaxed">
+              "Whisper your challenge—our ears and hearts lean in.<br />
+              We prototype in days. We solve for keeps."
+            </p>
+          </div>
+
+          {/* Stats grid inspired by your screenshot */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 w-full max-w-5xl animate-fade-in" style={{ animationDelay: '0.4s' }}>
+            <div className="glass-card p-6 text-center">
+              <div className="text-4xl md:text-5xl font-bold glow-text mb-2">90%</div>
+              <div className="text-lg font-semibold text-foreground mb-2">Reduction in AI deployment time</div>
+              <div className="text-sm text-muted-foreground">Deploy faster and more efficiently</div>
+            </div>
+            <div className="glass-card p-6 text-center">
+              <div className="text-4xl md:text-5xl font-bold glow-text mb-2">85%</div>
+              <div className="text-lg font-semibold text-foreground mb-2">Improvement in enterprise AI adoption rates</div>
+              <div className="text-sm text-muted-foreground">Better implementation equals better adoption</div>
+            </div>
+            <div className="glass-card p-6 text-center">
+              <div className="text-4xl md:text-5xl font-bold glow-text mb-2">75%</div>
+              <div className="text-lg font-semibold text-foreground mb-2">Decrease in AI operational costs</div>
+              <div className="text-sm text-muted-foreground">More efficient, less expensive</div>
+            </div>
+          </div>
           
-          <div className="flex flex-col sm:flex-row gap-4 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            <Link to="/services">
-              <Button className="btn-primary holographic-border">Explore Solutions</Button>
-            </Link>
+          <div className="animate-fade-in" style={{ animationDelay: '0.5s' }}>
             <Link to="/book">
-              <Button className="btn-secondary">
-                Book a Consultation
+              <Button className="btn-primary holographic-border text-lg px-8 py-4">
+                Start the Conversation
               </Button>
             </Link>
           </div>
-
-          <TechTicker />
         </div>
       </div>
     </section>

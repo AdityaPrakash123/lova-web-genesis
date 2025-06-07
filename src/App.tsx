@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import VoiceNavigation from "./components/VoiceNavigation";
+import PageTransition from "./components/PageTransition";
 
 const queryClient = new QueryClient();
 
@@ -23,13 +24,15 @@ const App = () => (
       <BrowserRouter>
         <div className="flex flex-col min-h-screen">
           <Navbar />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/book" element={<BookingPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <PageTransition>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/book" element={<BookingPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </PageTransition>
           <Footer />
           <VoiceNavigation />
         </div>
