@@ -26,7 +26,7 @@ const services = [
 ];
 
 const ServiceCard = ({ service, index }: { service: typeof services[0]; index: number }) => {
-  const { ref, isVisible } = useScrollReveal({ 
+  const { ref, isVisible } = useScrollReveal<HTMLDivElement>({ 
     threshold: 0.1, 
     delay: index * 75,
     rootMargin: '50px'

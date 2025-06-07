@@ -29,10 +29,10 @@ const getSharedObserver = (threshold: number, rootMargin: string) => {
   return sharedObserver;
 };
 
-export const useScrollReveal = (options: UseScrollRevealOptions = {}) => {
+export const useScrollReveal = <T extends HTMLElement = HTMLElement>(options: UseScrollRevealOptions = {}) => {
   const { threshold = 0.1, delay = 0, once = true, rootMargin = '0px' } = options;
   const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<T>(null);
   const timeoutRef = useRef<NodeJS.Timeout>();
 
   const handleVisibilityChange = useCallback((visible: boolean) => {
