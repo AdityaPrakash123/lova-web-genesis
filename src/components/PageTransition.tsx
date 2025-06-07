@@ -15,46 +15,30 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
     if (location !== displayLocation) {
       setIsTransitioning(true);
       
-      // Start exit animation
-      const exitTimer = setTimeout(() => {
+      // Start flip transition
+      const flipTimer = setTimeout(() => {
         setDisplayLocation(location);
         
-        // Start enter animation
-        const enterTimer = setTimeout(() => {
+        // Complete the flip
+        const completeTimer = setTimeout(() => {
           setIsTransitioning(false);
-        }, 100);
+        }, 300);
 
-        return () => clearTimeout(enterTimer);
-      }, 200);
+        return () => clearTimeout(completeTimer);
+      }, 300);
 
-      return () => clearTimeout(exitTimer);
+      return () => clearTimeout(flipTimer);
     }
   }, [location, displayLocation]);
 
   return (
-    <div className="relative">
-      {/* Transition overlay */}
+    <div className="relative perspective-1000">
+      {/* Page content with 3D flip transition */}
       <div 
-        className={`fixed inset-0 bg-gradient-to-br from-navy via-navy/95 to-navy/90 backdrop-blur-sm z-50 transition-all duration-300 ease-in-out ${
+        className={`transition-all duration-500 ease-in-out transform-style-preserve-3d ${
           isTransitioning 
-            ? 'opacity-100 pointer-events-auto' 
-            : 'opacity-0 pointer-events-none'
-        }`}
-      >
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <div className="text-accent font-medium">Transitioning...</div>
-          </div>
-        </div>
-      </div>
-      
-      {/* Page content */}
-      <div 
-        className={`transition-all duration-300 ease-out ${
-          isTransitioning 
-            ? 'opacity-0 transform translate-y-4' 
-            : 'opacity-100 transform translate-y-0'
+            ? 'rotate-y-180 scale-95' 
+            : 'rotate-y-0 scale-100'
         }`}
         key={displayLocation.pathname}
       >

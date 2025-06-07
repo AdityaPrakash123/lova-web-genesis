@@ -39,8 +39,7 @@ const Navbar = () => {
 
   const menuItems = [
     { title: 'Home', path: '/' },
-    { title: 'Services', path: '/services' },
-    { title: 'Contact', path: '/contact' }
+    { title: 'Services', path: '/services' }
   ];
 
   return (

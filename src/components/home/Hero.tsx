@@ -71,15 +71,18 @@ const Hero = () => {
             The perfect balance of automation and expertise.
           </p>
 
-          {/* Hero message inspired by your copy */}
+          {/* Our Values section */}
           <div className="mb-12 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <h2 className="text-2xl md:text-3xl mb-4 text-foreground font-bold">Our Values</h2>
             <p className="text-xl md:text-2xl mb-4 text-foreground font-medium leading-relaxed">
-              "Whisper your challenge—our ears and hearts lean in.<br />
-              We prototype in days. We solve for keeps."
+              We Listen. We Tailor. We Deliver.
+            </p>
+            <p className="text-lg text-muted-foreground">
+              Listening to your challenges, crafting personalized solutions, and helping you put them into action.
             </p>
           </div>
 
-          {/* Stats grid inspired by your screenshot */}
+          {/* Stats grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 w-full max-w-5xl animate-fade-in" style={{ animationDelay: '0.4s' }}>
             <div className="glass-card p-6 text-center">
               <div className="text-4xl md:text-5xl font-bold glow-text mb-2">90%</div>
@@ -101,7 +104,7 @@ const Hero = () => {
           <div className="animate-fade-in" style={{ animationDelay: '0.5s' }}>
             <Link to="/book">
               <Button className="btn-primary holographic-border text-lg px-8 py-4">
-                Start the Conversation
+                Let's Talk
               </Button>
             </Link>
           </div>
