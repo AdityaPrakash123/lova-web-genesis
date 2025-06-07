@@ -1,7 +1,8 @@
 
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 const services = [
   {
@@ -25,30 +26,16 @@ const services = [
 ];
 
 const ServiceCard = ({ service, index }: { service: typeof services[0]; index: number }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => setIsVisible(true), index * 75);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => observer.disconnect();
-  }, [index]);
+  const { ref, isVisible } = useScrollReveal({ 
+    threshold: 0.1, 
+    delay: index * 75,
+    rootMargin: '50px'
+  });
 
   return (
     <div
       ref={ref}
-      className={`glass-card p-6 flex flex-col h-full staggered-reveal ${isVisible ? 'visible' : ''}`}
+      className={`glass-card p-6 flex flex-col h-full staggered-reveal service-card ${isVisible ? 'visible' : ''}`}
     >
       <div className="text-4xl mb-4 breathe-icon">
         {service.icon}

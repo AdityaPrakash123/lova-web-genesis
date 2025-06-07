@@ -1,5 +1,6 @@
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 const stats = [
   {
@@ -22,34 +23,17 @@ const stats = [
   }
 ];
 
-const CountUpNumber = ({ target, suffix, delay }: { target: number; suffix: string; delay: number }) => {
+const CountUpNumber = ({ target, suffix, delay, isVisible }: { target: number; suffix: string; delay: number; isVisible: boolean }) => {
   const [count, setCount] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !isVisible) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
+    if (!isVisible || hasAnimated) return;
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => observer.disconnect();
-  }, [isVisible]);
-
-  useEffect(() => {
-    if (!isVisible) return;
-
+    setHasAnimated(true);
     const timer = setTimeout(() => {
-      const duration = 2000;
-      const increment = target / (duration / 16);
+      const duration = 1500; // Reduced from 2000ms
+      const increment = target / (duration / 32); // Reduced frame rate from 16ms to 32ms
       let current = 0;
 
       const counter = setInterval(() => {
@@ -60,24 +44,26 @@ const CountUpNumber = ({ target, suffix, delay }: { target: number; suffix: stri
         } else {
           setCount(Math.floor(current));
         }
-      }, 16);
+      }, 32);
 
       return () => clearInterval(counter);
     }, delay);
 
     return () => clearTimeout(timer);
-  }, [isVisible, target, delay]);
+  }, [isVisible, target, delay, hasAnimated]);
 
   return (
-    <div ref={ref} className="text-5xl md:text-6xl font-bold mb-4 glow-text count-up">
+    <div className="text-5xl md:text-6xl font-bold mb-4 glow-text count-up">
       {count}{suffix}
     </div>
   );
 };
 
 const Stats = () => {
+  const { ref, isVisible } = useScrollReveal({ threshold: 0.2 });
+
   return (
-    <section className="py-16 relative">
+    <section className="py-16 relative" ref={ref}>
       <div className="container max-w-7xl mx-auto px-4">
         <div className="flex flex-col items-center mb-12">
           <h2 className="mb-4 text-center">
@@ -92,22 +78,17 @@ const Stats = () => {
           {stats.map((stat, index) => (
             <div 
               key={index} 
-              className="glass-card p-8 flex flex-col items-center staggered-reveal"
-              style={{ animationDelay: `${0.2 * index}s` }}
+              className={`glass-card p-8 flex flex-col items-center staggered-reveal ${isVisible ? 'visible' : ''}`}
+              style={{ transitionDelay: `${0.1 * index}s` }}
             >
               <div className="relative">
                 <CountUpNumber 
                   target={stat.value} 
                   suffix={stat.suffix}
-                  delay={index * 200}
+                  delay={index * 100}
+                  isVisible={isVisible}
                 />
-                <div 
-                  className="absolute inset-0 rounded-full opacity-20 blur-xl"
-                  style={{
-                    background: `radial-gradient(circle, var(--glow) 0%, transparent 70%)`,
-                    transform: 'scale(1.5)'
-                  }}
-                ></div>
+                <div className="stats-glow"></div>
               </div>
               <div className="text-xl font-medium mb-2 text-center">
                 {stat.label}
