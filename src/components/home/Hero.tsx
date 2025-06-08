@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -147,7 +148,7 @@ const Hero = () => {
               />
             </div>
 
-            {/* Our Goals - Value-aligned content instead of metrics */}
+            {/* Goal Cards replacing the metric cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 w-full max-w-5xl">
               <GoalCard
                 icon={Heart}
