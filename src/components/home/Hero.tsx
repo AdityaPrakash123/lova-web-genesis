@@ -1,9 +1,8 @@
-
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useDebouncedMouse } from '@/hooks/useScrollReveal';
-import { Ear, Target, Zap } from 'lucide-react';
+import { Ear, Target, Zap, Heart, Users, Lightbulb } from 'lucide-react';
 
 const KineticText = ({ children }: { children: string }) => {
   return (
@@ -35,6 +34,28 @@ const ValueCard = ({ icon: Icon, title, description, delay }: {
       </div>
       <h3 className="text-xl font-bold mb-3 glow-text">{title}</h3>
       <p className="text-muted-foreground">{description}</p>
+    </div>
+  );
+};
+
+const GoalCard = ({ icon: Icon, title, description, delay }: { 
+  icon: any; 
+  title: string; 
+  description: string; 
+  delay: number;
+}) => {
+  return (
+    <div 
+      className="glass-card p-6 text-center group hover:scale-105 transition-all duration-300 animate-fade-in"
+      style={{ animationDelay: `${delay}s` }}
+    >
+      <div className="mb-4 flex justify-center">
+        <div className="p-3 rounded-full bg-accent/10 group-hover:bg-accent/20 transition-colors">
+          <Icon className="h-6 w-6 text-accent" />
+        </div>
+      </div>
+      <h4 className="text-lg font-semibold mb-2 text-foreground">{title}</h4>
+      <p className="text-sm text-muted-foreground">{description}</p>
     </div>
   );
 };
@@ -104,8 +125,8 @@ const Hero = () => {
               Listening to your challenges, crafting personalized solutions, and helping you put them into action.
             </p>
 
-            {/* Interactive Values Cards - centered and properly aligned */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 w-full max-w-6xl mx-auto">
+            {/* Interactive Values Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 w-full max-w-4xl">
               <ValueCard
                 icon={Ear}
                 title="We Listen"
@@ -123,6 +144,28 @@ const Hero = () => {
                 title="We Deliver"
                 description="From concept to execution, we turn ideas into reality with speed and precision."
                 delay={0.6}
+              />
+            </div>
+
+            {/* Our Goals - Value-aligned content instead of metrics */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 w-full max-w-5xl">
+              <GoalCard
+                icon={Heart}
+                title="Human-Centered Approach"
+                description="Technology should serve people, not replace them. We build AI that enhances human capabilities."
+                delay={0.7}
+              />
+              <GoalCard
+                icon={Users}
+                title="Partnership & Trust"
+                description="We believe in building lasting relationships through transparency, reliability, and shared success."
+                delay={0.8}
+              />
+              <GoalCard
+                icon={Lightbulb}
+                title="Innovation with Purpose"
+                description="Every solution we create is designed to solve real problems and drive meaningful impact."
+                delay={0.9}
               />
             </div>
           </div>
