@@ -51,11 +51,6 @@ const Footer = () => {
                 </a>
               </li>
               <li className="text-muted-foreground">
-                Phone: <a href="tel:+18444406518" className="hover:text-foreground transition-colors">
-                  +1 (844) 440-6518
-                </a>
-              </li>
-              <li className="text-muted-foreground">
                 Address: 505 Albert Street, Kingston ON K7K 4M5, Canada
               </li>
             </ul>

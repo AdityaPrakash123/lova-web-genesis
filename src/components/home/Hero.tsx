@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useDebouncedMouse } from '@/hooks/useScrollReveal';
-import { Ear, Target, Zap, Heart, Users, Lightbulb } from 'lucide-react';
 
 const KineticText = ({ children }: { children: string }) => {
   return (
@@ -14,50 +13,6 @@ const KineticText = ({ children }: { children: string }) => {
         </span>
       ))}
     </span>
-  );
-};
-
-const ValueCard = ({ icon: Icon, title, description, delay }: { 
-  icon: any; 
-  title: string; 
-  description: string; 
-  delay: number;
-}) => {
-  return (
-    <div 
-      className="glass-card p-6 text-center group hover:scale-105 transition-all duration-300 animate-fade-in h-full flex flex-col justify-center"
-      style={{ animationDelay: `${delay}s` }}
-    >
-      <div className="mb-4 flex justify-center">
-        <div className="p-3 rounded-full bg-accent/20 group-hover:bg-accent/30 transition-colors">
-          <Icon className="h-8 w-8 text-accent" />
-        </div>
-      </div>
-      <h3 className="text-xl font-bold mb-3 glow-text">{title}</h3>
-      <p className="text-muted-foreground">{description}</p>
-    </div>
-  );
-};
-
-const GoalCard = ({ icon: Icon, title, description, delay }: { 
-  icon: any; 
-  title: string; 
-  description: string; 
-  delay: number;
-}) => {
-  return (
-    <div 
-      className="glass-card p-6 text-center group hover:scale-105 transition-all duration-300 animate-fade-in h-full flex flex-col justify-center"
-      style={{ animationDelay: `${delay}s` }}
-    >
-      <div className="mb-4 flex justify-center">
-        <div className="p-3 rounded-full bg-accent/10 group-hover:bg-accent/20 transition-colors">
-          <Icon className="h-6 w-6 text-accent" />
-        </div>
-      </div>
-      <h4 className="text-lg font-semibold mb-2 text-foreground">{title}</h4>
-      <p className="text-sm text-muted-foreground">{description}</p>
-    </div>
   );
 };
 
@@ -116,63 +71,8 @@ const Hero = () => {
           <p className="text-lg md:text-xl mb-8 text-muted-foreground max-w-3xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
             The perfect balance of automation and expertise.
           </p>
-
-          {/* Our Values section */}
-          <div className="mb-12 animate-fade-in w-full" style={{ animationDelay: '0.3s' }}>
-            <h2 className="text-2xl md:text-3xl mb-4 text-foreground font-bold">Our Values</h2>
-            <p className="text-xl md:text-2xl mb-8 text-foreground font-medium leading-relaxed">
-              We Listen. We Tailor. We Deliver.
-            </p>
-            <p className="text-lg text-muted-foreground mb-12">
-              Listening to your challenges, crafting personalized solutions, and helping you put them into action.
-            </p>
-
-            {/* Interactive Values Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 w-full max-w-5xl mx-auto items-stretch">
-              <ValueCard
-                icon={Ear}
-                title="We Listen"
-                description="Your challenges become our mission. We dive deep to understand your unique needs and pain points."
-                delay={0.4}
-              />
-              <ValueCard
-                icon={Target}
-                title="We Tailor"
-                description="No cookie-cutter solutions. Every strategy is crafted specifically for your business goals."
-                delay={0.5}
-              />
-              <ValueCard
-                icon={Zap}
-                title="We Deliver"
-                description="From concept to execution, we turn ideas into reality with speed and precision."
-                delay={0.6}
-              />
-            </div>
-
-            {/* Our Goals - Value-aligned content instead of metrics */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 w-full max-w-5xl mx-auto items-stretch">
-              <GoalCard
-                icon={Heart}
-                title="Human-Centered Approach"
-                description="Technology should serve people, not replace them. We build AI that enhances human capabilities."
-                delay={0.7}
-              />
-              <GoalCard
-                icon={Users}
-                title="Partnership & Trust"
-                description="We believe in building lasting relationships through transparency, reliability, and shared success."
-                delay={0.8}
-              />
-              <GoalCard
-                icon={Lightbulb}
-                title="Innovation with Purpose"
-                description="Every solution we create is designed to solve real problems and drive meaningful impact."
-                delay={0.9}
-              />
-            </div>
-          </div>
           
-          <div className="animate-fade-in" style={{ animationDelay: '0.7s' }}>
+          <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
             <Link to="/book">
               <Button className="btn-primary holographic-border text-lg px-8 py-4">
                 Start the Conversation

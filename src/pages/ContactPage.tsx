@@ -42,18 +42,6 @@ const ContactPage = () => {
               </div>
               
               <div>
-                <h3 className="text-lg font-semibold mb-2">Phone</h3>
-                <p className="text-muted-foreground">
-                  <a 
-                    href="tel:+18444406518" 
-                    className="hover:text-teal transition-colors"
-                  >
-                    +1 (844) 440-6518
-                  </a>
-                </p>
-              </div>
-              
-              <div>
                 <h3 className="text-lg font-semibold mb-2">Address</h3>
                 <p className="text-muted-foreground">
                   505 Albert Street<br />
