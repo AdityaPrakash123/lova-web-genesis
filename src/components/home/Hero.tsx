@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -24,7 +25,7 @@ const ValueCard = ({ icon: Icon, title, description, delay }: {
 }) => {
   return (
     <div 
-      className="glass-card p-6 text-center group hover:scale-105 transition-all duration-300 animate-fade-in"
+      className="glass-card p-6 text-center group hover:scale-105 transition-all duration-300 animate-fade-in h-full flex flex-col justify-center"
       style={{ animationDelay: `${delay}s` }}
     >
       <div className="mb-4 flex justify-center">
@@ -46,7 +47,7 @@ const GoalCard = ({ icon: Icon, title, description, delay }: {
 }) => {
   return (
     <div 
-      className="glass-card p-6 text-center group hover:scale-105 transition-all duration-300 animate-fade-in"
+      className="glass-card p-6 text-center group hover:scale-105 transition-all duration-300 animate-fade-in h-full flex flex-col justify-center"
       style={{ animationDelay: `${delay}s` }}
     >
       <div className="mb-4 flex justify-center">
@@ -103,7 +104,7 @@ const Hero = () => {
       )}
       
       <div className="container max-w-7xl mx-auto px-4 relative z-10">
-        <div className="flex flex-col items-center text-center max-w-5xl mx-auto">
+        <div className="flex flex-col items-center text-center max-w-6xl mx-auto">
           <h1 className="mb-6 animate-fade-in text-4xl md:text-6xl lg:text-7xl font-bold">
             <span className="text-foreground">AI-Assisted, </span>
             <span className="glow-text">
@@ -116,7 +117,7 @@ const Hero = () => {
           </p>
 
           {/* Our Values section */}
-          <div className="mb-12 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          <div className="mb-12 animate-fade-in w-full" style={{ animationDelay: '0.3s' }}>
             <h2 className="text-2xl md:text-3xl mb-4 text-foreground font-bold">Our Values</h2>
             <p className="text-xl md:text-2xl mb-8 text-foreground font-medium leading-relaxed">
               We Listen. We Tailor. We Deliver.
@@ -126,7 +127,7 @@ const Hero = () => {
             </p>
 
             {/* Interactive Values Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 w-full max-w-4xl">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 w-full max-w-5xl mx-auto items-stretch">
               <ValueCard
                 icon={Ear}
                 title="We Listen"
@@ -148,7 +149,7 @@ const Hero = () => {
             </div>
 
             {/* Our Goals - Value-aligned content instead of metrics */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 w-full max-w-5xl">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 w-full max-w-5xl mx-auto items-stretch">
               <GoalCard
                 icon={Heart}
                 title="Human-Centered Approach"
