@@ -105,8 +105,9 @@ const Hero = () => {
       
       <div className="container max-w-7xl mx-auto px-4 relative z-10">
         <div className="flex flex-col items-center text-center max-w-6xl mx-auto">
-          <h1 className="mb-6 animate-fade-in text-4xl md:text-6xl lg:text-7xl font-bold">
+          <h1 className="mb-8 animate-fade-in text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
             <span className="text-foreground">AI-Assisted, </span>
+            <br className="block md:hidden" />
             <span className="glow-text">
               <KineticText>Human Empowered.</KineticText>
             </span>
