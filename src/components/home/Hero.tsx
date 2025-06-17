@@ -1,10 +1,9 @@
-
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { useDebouncedMouse } from '@/hooks/useScrollReveal';
-import { Compass, CircuitBoard, Lightbulb, Rocket, Gauge, Lifebuoy } from 'lucide-react';
+import { Compass, CircuitBoard, Lightbulb, Rocket, Gauge, LifeBuoy } from 'lucide-react';
 
 const KineticText = ({ children }: { children: string }) => {
   return (
@@ -47,7 +46,7 @@ const serviceCards = [
   {
     title: "Forever Support",
     description: "Friendly help that never clocks out.",
-    icon: Lifebuoy
+    icon: LifeBuoy
   }
 ];
 
