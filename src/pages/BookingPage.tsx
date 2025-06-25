@@ -4,37 +4,67 @@ import React, { useEffect, useState } from 'react';
 // Extend Window interface to include Calendly
 declare global {
   interface Window {
-    Calendly?: any;
+    Calendly?: {
+      initInlineWidget: (options: any) => void;
+    };
   }
 }
 
 const BookingPage = () => {
   const [isCalendlyLoaded, setIsCalendlyLoaded] = useState(false);
+  const [isScriptLoaded, setIsScriptLoaded] = useState(false);
 
   useEffect(() => {
     document.title = "Book a Consultation - MARCS DIGITAL Solutions";
     
-    // Preload and initialize Calendly widget faster
     const loadCalendly = () => {
+      // Check if Calendly is already loaded
       if (window.Calendly) {
-        setIsCalendlyLoaded(true);
+        setIsScriptLoaded(true);
+        initializeCalendlyWidget();
         return;
       }
 
+      // Load Calendly script
       const script = document.createElement('script');
       script.src = 'https://assets.calendly.com/assets/external/widget.js';
       script.async = true;
-      script.onload = () => setIsCalendlyLoaded(true);
       
-      // Add script to head for faster loading
+      script.onload = () => {
+        setIsScriptLoaded(true);
+        // Small delay to ensure Calendly is fully initialized
+        setTimeout(() => {
+          initializeCalendlyWidget();
+        }, 100);
+      };
+      
+      script.onerror = () => {
+        console.error('Failed to load Calendly script');
+      };
+      
       document.head.appendChild(script);
     };
 
-    // Load immediately without delay
+    const initializeCalendlyWidget = () => {
+      if (window.Calendly) {
+        try {
+          window.Calendly.initInlineWidget({
+            url: 'https://calendly.com/marcsdigitalsolutions-info',
+            parentElement: document.querySelector('.calendly-inline-widget'),
+            prefill: {},
+            utm: {}
+          });
+          setIsCalendlyLoaded(true);
+        } catch (error) {
+          console.error('Error initializing Calendly widget:', error);
+        }
+      }
+    };
+
     loadCalendly();
     
     return () => {
-      // Clean up - find and remove the script
+      // Clean up
       const scripts = document.head.querySelectorAll('script[src*="calendly"]');
       scripts.forEach(script => script.remove());
     };
@@ -60,20 +90,30 @@ const BookingPage = () => {
           {!isCalendlyLoaded && (
             <div className="flex items-center justify-center py-12">
               <div className="text-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-                <p className="text-muted-foreground">Loading calendar...</p>
+                <div className="mb-6">
+                  <img 
+                    src="/lovable-uploads/9e0dbbac-0b0d-4873-9920-efbb9705966a.png" 
+                    alt="MARCS Digital Solutions Logo" 
+                    className="w-24 h-24 mx-auto logo-spin"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <p className="text-lg font-medium text-foreground">Loading Calendar...</p>
+                  <p className="text-sm text-muted-foreground">
+                    {!isScriptLoaded ? 'Initializing Calendly...' : 'Setting up your booking interface...'}
+                  </p>
+                </div>
               </div>
             </div>
           )}
           <div 
-            className={`calendly-inline-widget transition-opacity duration-300 ${
-              isCalendlyLoaded ? 'opacity-100' : 'opacity-0'
+            className={`calendly-inline-widget transition-opacity duration-500 ${
+              isCalendlyLoaded ? 'opacity-100' : 'opacity-0 h-0'
             }`}
-            data-url="https://calendly.com/marcsdigitalsolutions-info"
             style={{ 
               minWidth: '320px', 
-              height: '700px',
-              border: '1px solid hsl(var(--border))',
+              height: isCalendlyLoaded ? '700px' : '0px',
+              border: isCalendlyLoaded ? '1px solid hsl(var(--border))' : 'none',
               borderRadius: '12px',
               overflow: 'hidden'
             }}

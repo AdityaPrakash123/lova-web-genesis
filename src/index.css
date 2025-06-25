@@ -5,26 +5,26 @@
 
 @layer base {
   :root {
-    /* Light mode colors */
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
+    /* Light mode colors - Updated to beige theme */
+    --background: 44 28% 96%; /* Soft beige background */
+    --foreground: 20 14.3% 4.1%; /* Dark text */
+    --card: 44 28% 98%; /* Light beige cards */
+    --card-foreground: 20 14.3% 4.1%;
+    --popover: 44 28% 98%;
+    --popover-foreground: 20 14.3% 4.1%;
+    --primary: 142 76% 36%; /* Keeping the blue-green primary */
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 44 20% 90%; /* Beige secondary */
+    --secondary-foreground: 20 14.3% 4.1%;
+    --muted: 44 20% 88%; /* Muted beige */
+    --muted-foreground: 25 5.3% 44.7%;
+    --accent: 44 20% 85%; /* Accent beige */
+    --accent-foreground: 20 14.3% 4.1%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
+    --border: 44 20% 82%; /* Beige borders */
+    --input: 44 20% 82%;
+    --ring: 142 76% 36%;
     --radius: 0.5rem;
   }
 
@@ -36,7 +36,7 @@
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
+    --primary: 142 76% 36%;
     --primary-foreground: 222.2 84% 4.9%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
@@ -48,7 +48,7 @@
     --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 94.1%;
+    --ring: 142 76% 36%;
   }
 }
 
@@ -109,5 +109,18 @@
 
   .theme-card:hover {
     @apply border-primary/50;
+  }
+
+  .logo-spin {
+    animation: logo-spin 2s linear infinite;
+  }
+
+  @keyframes logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 }
