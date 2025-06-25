@@ -10,7 +10,6 @@ import BookingPage from "./pages/BookingPage";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import VoiceNavigation from "./components/VoiceNavigation";
 import PageTransition from "./components/PageTransition";
 
 const queryClient = new QueryClient();
@@ -32,7 +31,6 @@ const App = () => (
             </Routes>
           </PageTransition>
           <Footer />
-          <VoiceNavigation />
         </div>
       </BrowserRouter>
     </TooltipProvider>
