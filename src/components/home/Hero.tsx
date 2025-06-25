@@ -41,17 +41,13 @@ const serviceCards = [
 const Hero = () => {
   return (
     <section className="relative overflow-hidden min-h-screen flex items-center justify-center py-16">
-      <div className="absolute inset-0 bg-gradient-radial from-transparent to-navy/50 z-0"></div>
-      
       <div className="container max-w-7xl mx-auto px-4 relative z-10">
         <div className="flex flex-col items-center text-center">
           {/* Main Headline */}
-          <h1 className="mb-8 text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
-            <span className="text-foreground">Your Problems. </span>
+          <h1 className="mb-8 text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-foreground">
+            <span>Your Problems. </span>
             <br className="block md:hidden" />
-            <span className="text-foreground font-bold opacity-100">
-              Our Solutions.
-            </span>
+            <span>Our Solutions.</span>
           </h1>
           
           {/* Sub-headline */}

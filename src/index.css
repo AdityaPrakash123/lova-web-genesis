@@ -35,9 +35,10 @@
 
     --radius: 0.5rem;
 
-    /* Simplified theme variables */
+    /* Consistent dark theme variables */
     --bg: hsl(230, 60%, 4%);
-    --card: rgba(255, 255, 255, 0.05);
+    --section-bg: hsl(230, 60%, 6%);
+    --card-bg: rgba(255, 255, 255, 0.05);
     --accent: hsl(180, 100%, 50%);
     --glow: rgba(0, 255, 255, 0.4);
   }
@@ -49,18 +50,22 @@
   }
   
   body {
-    @apply bg-navy text-foreground min-h-screen;
+    @apply text-foreground min-h-screen;
     background: var(--bg);
   }
 
-  /* Simplified background - no animations */
+  /* Consistent dark background for all sections */
   body {
-    background: 
-      linear-gradient(135deg, hsl(240, 80%, 15%) 0%, hsl(260, 80%, 20%) 50%, hsl(280, 80%, 15%) 100%);
+    background: linear-gradient(135deg, hsl(240, 80%, 15%) 0%, hsl(260, 80%, 20%) 50%, hsl(280, 80%, 15%) 100%);
+  }
+  
+  /* Ensure all sections use consistent background */
+  section {
+    background: transparent;
   }
   
   h1, h2, h3, h4, h5 {
-    @apply font-bold tracking-tight;
+    @apply font-bold tracking-tight text-foreground;
   }
 
   h1 {
@@ -79,18 +84,17 @@
     @apply text-xl md:text-2xl;
   }
 
-  /* Simplified page transitions */
+  /* Simplified transitions */
   .page-transition {
     opacity: 1;
     transform: none;
   }
 
-  /* Simplified button hover effects */
+  /* Consistent button and link styles */
   button {
     @apply transition-colors duration-200;
   }
 
-  /* Simplified link hover effects */
   a {
     @apply transition-colors duration-200;
   }
@@ -122,11 +126,12 @@
   
   .container-section {
     @apply container max-w-7xl mx-auto px-4 py-16 md:py-24;
+    background: transparent;
   }
   
   .glass-card {
     @apply relative overflow-hidden rounded-xl backdrop-blur-sm border;
-    background: var(--card);
+    background: var(--card-bg);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
@@ -139,14 +144,20 @@
     background-image: linear-gradient(135deg, var(--accent), var(--glow));
   }
 
-  /* Simplified input styles */
+  /* Consistent input styles */
   input, textarea, select {
     @apply transition-colors duration-200;
-    background: var(--card);
+    background: var(--card-bg);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--foreground);
   }
 
   input:focus, textarea:focus {
     border-color: var(--accent);
+  }
+
+  /* Ensure consistent text colors */
+  p, span, div {
+    color: inherit;
   }
 }
