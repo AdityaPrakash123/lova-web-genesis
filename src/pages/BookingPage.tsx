@@ -1,6 +1,13 @@
 
 import React, { useEffect, useState } from 'react';
 
+// Extend Window interface to include Calendly
+declare global {
+  interface Window {
+    Calendly?: any;
+  }
+}
+
 const BookingPage = () => {
   const [isCalendlyLoaded, setIsCalendlyLoaded] = useState(false);
 
