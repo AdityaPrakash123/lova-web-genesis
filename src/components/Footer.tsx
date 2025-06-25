@@ -6,13 +6,13 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="border-t border-border/40 bg-navy-dark">
+    <footer className="border-t bg-background">
       <div className="container max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo and tagline */}
           <div className="md:col-span-2">
             <h3 className="text-xl font-bold mb-4">
-              MARCS <span className="glow-text">DIGITAL SOLUTIONS</span>
+              MARCS <span className="text-primary">DIGITAL SOLUTIONS</span>
             </h3>
             <p className="text-muted-foreground max-w-sm">
               Your Problems. Our Solutions. We deliver digital transformation and technology services that drive innovation.
@@ -58,7 +58,7 @@ const Footer = () => {
         </div>
         
         {/* Copyright */}
-        <div className="mt-12 pt-6 border-t border-border/40">
+        <div className="mt-12 pt-6 border-t">
           <p className="text-sm text-muted-foreground">
             © {currentYear} MARCS DIGITAL Solutions. All rights reserved.
           </p>

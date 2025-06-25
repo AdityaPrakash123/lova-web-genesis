@@ -5,42 +5,50 @@
 
 @layer base {
   :root {
-    --background: 210 75% 5%;
-    --foreground: 210 10% 98%;
-
-    --card: 210 75% 7%;
-    --card-foreground: 210 10% 98%;
-
-    --popover: 210 75% 5%;
-    --popover-foreground: 210 10% 98%;
-
-    --primary: 173 70% 50%;
-    --primary-foreground: 173 80% 5%;
-
-    --secondary: 210 50% 15%;
-    --secondary-foreground: 210 10% 98%;
-
-    --muted: 210 50% 12%;
-    --muted-foreground: 210 10% 70%;
-
-    --accent: 173 70% 45%;
-    --accent-foreground: 173 80% 5%;
-
+    /* Light mode colors */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 214.3 31.8% 20.4%;
-    --input: 214.3 31.8% 20.4%;
-    --ring: 173 70% 50%;
-
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
     --radius: 0.5rem;
+  }
 
-    /* Consistent dark theme variables */
-    --bg: hsl(230, 60%, 4%);
-    --section-bg: hsl(230, 60%, 6%);
-    --card-bg: rgba(255, 255, 255, 0.05);
-    --accent: hsl(180, 100%, 50%);
-    --glow: rgba(0, 255, 255, 0.4);
+  .dark {
+    /* Dark mode colors */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 94.1%;
   }
 }
 
@@ -50,18 +58,7 @@
   }
   
   body {
-    @apply text-foreground min-h-screen;
-    background: var(--bg);
-  }
-
-  /* Consistent dark background for all sections */
-  body {
-    background: linear-gradient(135deg, hsl(240, 80%, 15%) 0%, hsl(260, 80%, 20%) 50%, hsl(280, 80%, 15%) 100%);
-  }
-  
-  /* Ensure all sections use consistent background */
-  section {
-    background: transparent;
+    @apply bg-background text-foreground transition-colors duration-300;
   }
   
   h1, h2, h3, h4, h5 {
@@ -84,13 +81,6 @@
     @apply text-xl md:text-2xl;
   }
 
-  /* Simplified transitions */
-  .page-transition {
-    opacity: 1;
-    transform: none;
-  }
-
-  /* Consistent button and link styles */
   button {
     @apply transition-colors duration-200;
   }
@@ -102,62 +92,22 @@
 
 @layer components {
   .btn-primary {
-    @apply relative px-6 py-3 rounded-md font-medium;
-    background: linear-gradient(45deg, var(--accent), var(--glow));
-    color: white;
-    transition: opacity 0.2s ease;
-  }
-  
-  .btn-primary:hover {
-    opacity: 0.9;
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-3 rounded-md font-medium transition-colors;
   }
 
   .btn-secondary {
-    @apply relative px-6 py-3 rounded-md font-medium border-2 transition-colors duration-200;
-    background: transparent;
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  .btn-secondary:hover {
-    background: var(--accent);
-    color: white;
+    @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground px-6 py-3 rounded-md font-medium transition-colors;
   }
   
   .container-section {
     @apply container max-w-7xl mx-auto px-4 py-16 md:py-24;
-    background: transparent;
   }
   
-  .glass-card {
-    @apply relative overflow-hidden rounded-xl backdrop-blur-sm border;
-    background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  .theme-card {
+    @apply bg-card text-card-foreground border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300;
   }
 
-  .glass-card:hover {
-    border-color: var(--accent);
-  }
-  
-  .glow-text {
-    @apply text-transparent bg-clip-text;
-    background-image: linear-gradient(135deg, var(--accent), var(--glow));
-  }
-
-  /* Consistent input styles */
-  input, textarea, select {
-    @apply transition-colors duration-200;
-    background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--foreground);
-  }
-
-  input:focus, textarea:focus {
-    border-color: var(--accent);
-  }
-
-  /* Ensure consistent text colors */
-  p, span, div {
-    color: inherit;
+  .theme-card:hover {
+    @apply border-primary/50;
   }
 }

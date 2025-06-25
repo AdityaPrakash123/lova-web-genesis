@@ -6,31 +6,27 @@ import { Menu, X, Moon, Sun } from 'lucide-react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isNightMode, setIsNightMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme') === 'dark' || 
+             (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    }
+    return false;
+  });
 
-  // Auto night mode detection
   useEffect(() => {
-    const checkTimeAndSetNightMode = () => {
-      const hour = new Date().getHours();
-      const shouldBeNightMode = hour >= 18 || hour < 6;
-      setIsNightMode(shouldBeNightMode);
-      
-      if (shouldBeNightMode) {
-        document.body.classList.add('night-mode');
-      } else {
-        document.body.classList.remove('night-mode');
-      }
-    };
+    const root = window.document.documentElement;
+    if (isDarkMode) {
+      root.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      root.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDarkMode]);
 
-    checkTimeAndSetNightMode();
-    const interval = setInterval(checkTimeAndSetNightMode, 60000); // Check every minute
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const toggleNightMode = () => {
-    setIsNightMode(!isNightMode);
-    document.body.classList.toggle('night-mode');
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
   };
 
   const toggleMenu = () => {
@@ -43,13 +39,13 @@ const Navbar = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full glass-card border-b border-white/10">
+    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
       <div className="container max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">
           <Link to="/" className="flex items-center gap-2">
-            <span className="text-xl md:text-2xl font-bold text-foreground">
-              MARCS <span className="glow-text">DIGITAL SOLUTIONS</span>
+            <span className="text-xl md:text-2xl font-bold">
+              MARCS <span className="text-primary">DIGITAL SOLUTIONS</span>
             </span>
           </Link>
         </div>
@@ -60,22 +56,21 @@ const Navbar = () => {
             <Link
               key={item.title}
               to={item.path}
-              className="text-base font-medium text-muted-foreground hover:text-foreground transition-all duration-300 relative group"
+              className="text-base font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
               {item.title}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
             </Link>
           ))}
           
           <button
-            onClick={toggleNightMode}
-            className="p-2 rounded-full hover:bg-white/10 transition-colors"
-            aria-label="Toggle night mode"
+            onClick={toggleTheme}
+            className="p-2 rounded-md hover:bg-accent transition-colors"
+            aria-label="Toggle theme"
           >
-            {isNightMode ? (
-              <Sun className="h-5 w-5 text-yellow-400" />
+            {isDarkMode ? (
+              <Sun className="h-5 w-5" />
             ) : (
-              <Moon className="h-5 w-5 text-blue-400" />
+              <Moon className="h-5 w-5" />
             )}
           </button>
           
@@ -87,19 +82,19 @@ const Navbar = () => {
         {/* Mobile menu button */}
         <div className="md:hidden flex items-center gap-2">
           <button
-            onClick={toggleNightMode}
-            className="p-2 rounded-md text-muted-foreground hover:text-foreground"
-            aria-label="Toggle night mode"
+            onClick={toggleTheme}
+            className="p-2 rounded-md hover:bg-accent transition-colors"
+            aria-label="Toggle theme"
           >
-            {isNightMode ? (
-              <Sun className="h-5 w-5 text-yellow-400" />
+            {isDarkMode ? (
+              <Sun className="h-5 w-5" />
             ) : (
-              <Moon className="h-5 w-5 text-blue-400" />
+              <Moon className="h-5 w-5" />
             )}
           </button>
           <button
             onClick={toggleMenu}
-            className="p-2 rounded-md text-muted-foreground hover:text-foreground"
+            className="p-2 rounded-md hover:bg-accent transition-colors"
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -109,14 +104,14 @@ const Navbar = () => {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden fixed inset-0 top-16 glass-card border-t border-white/10 z-40">
-          <div className="container px-4 py-8 flex flex-col gap-6">
+        <div className="md:hidden border-t bg-background">
+          <div className="container px-4 py-6 flex flex-col gap-4">
             {menuItems.map((item) => (
               <Link
                 key={item.title}
                 to={item.path}
                 onClick={() => setIsMenuOpen(false)}
-                className="text-lg font-medium text-foreground hover:text-accent transition-colors"
+                className="text-lg font-medium hover:text-primary transition-colors"
               >
                 {item.title}
               </Link>

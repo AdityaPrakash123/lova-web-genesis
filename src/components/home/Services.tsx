@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { Card, CardContent } from '@/components/ui/card';
 
 const services = [
   {
@@ -25,37 +25,6 @@ const services = [
   }
 ];
 
-const ServiceCard = ({ service, index }: { service: typeof services[0]; index: number }) => {
-  const { ref, isVisible } = useScrollReveal<HTMLDivElement>({ 
-    threshold: 0.1, 
-    delay: index * 75,
-    rootMargin: '50px'
-  });
-
-  return (
-    <div
-      ref={ref}
-      className={`glass-card p-6 flex flex-col h-full staggered-reveal service-card ${isVisible ? 'visible' : ''}`}
-    >
-      <div className="text-4xl mb-4 breathe-icon">
-        {service.icon}
-      </div>
-      <h3 className="text-xl font-bold mb-3">{service.title}</h3>
-      <p className="text-muted-foreground mb-6 flex-grow">{service.description}</p>
-      <Link 
-        to={service.link} 
-        className="flex items-center gap-2 text-accent hover:text-glow transition-all duration-300 group mt-auto relative"
-      >
-        <span className="relative">
-          Learn more
-          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
-        </span>
-        <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-      </Link>
-    </div>
-  );
-};
-
 const Services = () => {
   return (
     <section className="container-section">
@@ -66,15 +35,32 @@ const Services = () => {
         </p>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 masonry-grid">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {services.map((service, index) => (
-          <ServiceCard key={index} service={service} index={index} />
+          <Card key={index} className="theme-card hover:scale-105">
+            <CardContent className="p-6 flex flex-col h-full">
+              <div className="text-4xl mb-4">
+                {service.icon}
+              </div>
+              <h3 className="text-xl font-bold mb-3">{service.title}</h3>
+              <p className="text-muted-foreground mb-6 flex-grow">{service.description}</p>
+              <Link 
+                to={service.link} 
+                className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors group mt-auto"
+              >
+                <span>Learn more</span>
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </CardContent>
+          </Card>
         ))}
       </div>
       
       <div className="flex justify-center mt-12">
-        <Link to="/services" className="btn-primary holographic-border">
-          View All Services
+        <Link to="/services">
+          <Button className="btn-primary">
+            View All Services
+          </Button>
         </Link>
       </div>
     </section>

@@ -40,11 +40,11 @@ const serviceCards = [
 
 const Hero = () => {
   return (
-    <section className="relative overflow-hidden min-h-screen flex items-center justify-center py-16">
-      <div className="container max-w-7xl mx-auto px-4 relative z-10">
+    <section className="relative min-h-screen flex items-center justify-center py-16">
+      <div className="container max-w-7xl mx-auto px-4">
         <div className="flex flex-col items-center text-center">
           {/* Main Headline */}
-          <h1 className="mb-8 text-4xl md:text-6xl lg:text-7xl font-bold leading-tight text-foreground">
+          <h1 className="mb-8 text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
             <span>Your Problems. </span>
             <br className="block md:hidden" />
             <span>Our Solutions.</span>
@@ -69,12 +69,12 @@ const Hero = () => {
             {serviceCards.map((card, index) => {
               const IconComponent = card.icon;
               return (
-                <Card key={index} className="glass-card p-6 transition-all duration-300 hover:scale-105">
-                  <CardContent className="p-0 flex flex-col items-center text-center space-y-4">
-                    <div className="p-3 rounded-full bg-primary/10 transition-colors duration-300">
+                <Card key={index} className="theme-card hover:scale-105">
+                  <CardContent className="p-6 flex flex-col items-center text-center space-y-4">
+                    <div className="p-3 rounded-full bg-primary/10">
                       <IconComponent className="w-8 h-8 text-primary" />
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground">
+                    <h3 className="text-lg font-semibold">
                       {card.title}
                     </h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">
