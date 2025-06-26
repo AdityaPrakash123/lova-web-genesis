@@ -31,6 +31,7 @@ const BookingPage = () => {
       script.async = true;
       
       script.onload = () => {
+        console.log('Calendly script loaded successfully');
         setIsScriptLoaded(true);
         // Small delay to ensure Calendly is fully initialized
         setTimeout(() => {
@@ -48,12 +49,14 @@ const BookingPage = () => {
     const initializeCalendlyWidget = () => {
       if (window.Calendly) {
         try {
+          console.log('Initializing Calendly widget...');
           window.Calendly.initInlineWidget({
             url: 'https://calendly.com/marcsdigitalsolutions-info',
             parentElement: document.querySelector('.calendly-inline-widget'),
             prefill: {},
             utm: {}
           });
+          console.log('Calendly widget initialized');
           setIsCalendlyLoaded(true);
         } catch (error) {
           console.error('Error initializing Calendly widget:', error);
@@ -94,7 +97,7 @@ const BookingPage = () => {
                   <img 
                     src="/lovable-uploads/9e0dbbac-0b0d-4873-9920-efbb9705966a.png" 
                     alt="MARCS Digital Solutions Logo" 
-                    className="w-24 h-24 mx-auto logo-spin"
+                    className="w-24 h-24 mx-auto animate-spin"
                   />
                 </div>
                 <div className="space-y-2">

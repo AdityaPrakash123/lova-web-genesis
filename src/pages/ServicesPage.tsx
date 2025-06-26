@@ -52,8 +52,8 @@ const ServicesPage = () => {
   
   return (
     <main className="min-h-screen">
-      {/* Hero section */}
-      <section className="bg-navy-dark py-16 md:py-24">
+      {/* Hero section - Fixed to use proper theming */}
+      <section className="bg-background py-16 md:py-24">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="mb-6">Our Services</h1>
@@ -70,7 +70,7 @@ const ServicesPage = () => {
           {services.map((service, index) => (
             <div
               key={index}
-              className="glow-card rounded-xl p-8 flex flex-col h-full animate-fade-in"
+              className="theme-card animate-fade-in"
               style={{ animationDelay: `${0.1 * index}s` }}
             >
               <div className="text-4xl mb-4">{service.icon}</div>
