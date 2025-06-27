@@ -20,6 +20,7 @@ const BookingPage = () => {
     const loadCalendly = () => {
       // Check if Calendly is already loaded
       if (window.Calendly) {
+        console.log('Calendly already available');
         setIsScriptLoaded(true);
         initializeCalendlyWidget();
         return;
@@ -50,16 +51,38 @@ const BookingPage = () => {
       if (window.Calendly) {
         try {
           console.log('Initializing Calendly widget...');
-          window.Calendly.initInlineWidget({
-            url: 'https://calendly.com/marcsdigitalsolutions-info',
-            parentElement: document.querySelector('.calendly-inline-widget'),
-            prefill: {},
-            utm: {}
-          });
-          console.log('Calendly widget initialized');
-          setIsCalendlyLoaded(true);
+          const widgetElement = document.querySelector('.calendly-inline-widget');
+          if (widgetElement) {
+            window.Calendly.initInlineWidget({
+              url: 'https://calendly.com/marcsdigitalsolutions-info',
+              parentElement: widgetElement,
+              prefill: {},
+              utm: {}
+            });
+            console.log('Calendly widget initialized');
+            
+            // Wait a bit longer to ensure the widget content is loaded
+            setTimeout(() => {
+              // Check if the widget has content
+              const widgetContent = widgetElement.querySelector('iframe');
+              if (widgetContent) {
+                console.log('Calendly widget content loaded');
+                setIsCalendlyLoaded(true);
+              } else {
+                // Fallback: assume loaded after a reasonable delay
+                setTimeout(() => {
+                  console.log('Calendly widget assumed loaded (fallback)');
+                  setIsCalendlyLoaded(true);
+                }, 2000);
+              }
+            }, 1000);
+          }
         } catch (error) {
           console.error('Error initializing Calendly widget:', error);
+          // Still set as loaded to hide loading screen
+          setTimeout(() => {
+            setIsCalendlyLoaded(true);
+          }, 3000);
         }
       }
     };
@@ -111,11 +134,11 @@ const BookingPage = () => {
           )}
           <div 
             className={`calendly-inline-widget transition-opacity duration-500 ${
-              isCalendlyLoaded ? 'opacity-100' : 'opacity-0 h-0'
+              isCalendlyLoaded ? 'opacity-100' : 'opacity-0 absolute'
             }`}
             style={{ 
               minWidth: '320px', 
-              height: isCalendlyLoaded ? '700px' : '0px',
+              height: '700px',
               border: isCalendlyLoaded ? '1px solid hsl(var(--border))' : 'none',
               borderRadius: '12px',
               overflow: 'hidden'
