@@ -11,18 +11,12 @@ declare global {
 }
 
 const BookingPage = () => {
-  const [showTransition, setShowTransition] = useState(true);
+  const [isCalendlyLoaded, setIsCalendlyLoaded] = useState(false);
 
   useEffect(() => {
     document.title = "Book a Consultation - MARCS DIGITAL Solutions";
     
-    // Show transition for exactly 1.5 seconds
-    const transitionTimer = setTimeout(() => {
-      setShowTransition(false);
-      // Load Calendly after transition
-      loadCalendly();
-    }, 1500);
-    
+    // Load Calendly immediately when component mounts
     const loadCalendly = () => {
       // Check if Calendly is already loaded
       if (window.Calendly) {
@@ -46,6 +40,7 @@ const BookingPage = () => {
       
       script.onerror = () => {
         console.error('Failed to load Calendly script');
+        setIsCalendlyLoaded(true); // Show widget area even on error
       };
       
       document.head.appendChild(script);
@@ -67,19 +62,24 @@ const BookingPage = () => {
               utm: {}
             });
             console.log('Calendly widget initialized');
+            setIsCalendlyLoaded(true);
           } else {
             console.error('Widget element not found');
+            setIsCalendlyLoaded(true);
           }
         } catch (error) {
           console.error('Error initializing Calendly widget:', error);
+          setIsCalendlyLoaded(true);
         }
       } else {
         console.error('Calendly not available');
+        setIsCalendlyLoaded(true);
       }
     };
+
+    loadCalendly();
     
     return () => {
-      clearTimeout(transitionTimer);
       // Clean up
       const scripts = document.head.querySelectorAll('script[src*="calendly"]');
       scripts.forEach(script => script.remove());
@@ -103,31 +103,28 @@ const BookingPage = () => {
       {/* Calendly integration */}
       <section className="container-section">
         <div className="max-w-4xl mx-auto">
-          {showTransition && (
+          {!isCalendlyLoaded && (
             <div className="flex items-center justify-center py-12">
               <div className="text-center">
                 <div className="mb-6">
                   <img 
                     src="/lovable-uploads/9e0dbbac-0b0d-4873-9920-efbb9705966a.png" 
                     alt="MARCS Digital Solutions Logo" 
-                    className="w-24 h-24 mx-auto animate-spin"
+                    className="w-16 h-16 mx-auto animate-pulse"
                   />
                 </div>
-                <div className="space-y-2">
-                  <p className="text-lg font-medium text-foreground">Loading Calendar...</p>
-                  <p className="text-sm text-muted-foreground">Setting up your booking interface...</p>
-                </div>
+                <p className="text-sm text-muted-foreground">Loading calendar...</p>
               </div>
             </div>
           )}
           <div 
             className={`calendly-inline-widget transition-opacity duration-500 ${
-              showTransition ? 'opacity-0 absolute' : 'opacity-100'
+              isCalendlyLoaded ? 'opacity-100' : 'opacity-0'
             }`}
             style={{ 
               minWidth: '320px', 
-              height: '700px',
-              border: showTransition ? 'none' : '1px solid hsl(var(--border))',
+              height: isCalendlyLoaded ? '700px' : '0px',
+              border: isCalendlyLoaded ? '1px solid hsl(var(--border))' : 'none',
               borderRadius: '12px',
               overflow: 'hidden'
             }}
