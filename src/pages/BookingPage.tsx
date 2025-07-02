@@ -1,88 +1,88 @@
 
 import React, { useEffect, useState } from 'react';
 
-// Extend Window interface to include Calendly
-declare global {
-  interface Window {
-    Calendly?: {
-      initInlineWidget: (options: any) => void;
-    };
-  }
-}
-
 const BookingPage = () => {
   const [isCalendlyLoaded, setIsCalendlyLoaded] = useState(false);
 
   useEffect(() => {
     document.title = "Book a Consultation - MARCS DIGITAL Solutions";
     
-    // Load Calendly immediately when component mounts
-    const loadCalendly = () => {
-      // Check if Calendly is already loaded
-      if (window.Calendly) {
-        console.log('Calendly already available');
-        initializeCalendlyWidget();
-        return;
-      }
-
-      // Load Calendly script
-      const script = document.createElement('script');
-      script.src = 'https://assets.calendly.com/assets/external/widget.js';
-      script.async = true;
-      
-      script.onload = () => {
-        console.log('Calendly script loaded successfully');
-        // Small delay to ensure Calendly is fully initialized
-        setTimeout(() => {
+    // Load Calendly CSS first
+    const link = document.createElement('link');
+    link.href = 'https://assets.calendly.com/assets/external/widget.css';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+    
+    // Load Calendly script
+    const script = document.createElement('script');
+    script.src = 'https://assets.calendly.com/assets/external/widget.js';
+    script.async = true;
+    
+    script.onload = () => {
+      console.log('Calendly script loaded successfully');
+      // Wait a bit longer for Calendly to be fully available
+      setTimeout(() => {
+        if (window.Calendly) {
+          console.log('Calendly is available, initializing widget');
           initializeCalendlyWidget();
-        }, 500);
-      };
-      
-      script.onerror = () => {
-        console.error('Failed to load Calendly script');
-        setIsCalendlyLoaded(true); // Show widget area even on error
-      };
-      
-      document.head.appendChild(script);
+        } else {
+          console.log('Calendly still not available, using fallback');
+          // Fallback: directly inject the iframe
+          createCalendlyIframe();
+        }
+      }, 1000);
     };
+    
+    script.onerror = () => {
+      console.error('Failed to load Calendly script, using fallback');
+      createCalendlyIframe();
+    };
+    
+    document.head.appendChild(script);
 
     const initializeCalendlyWidget = () => {
-      if (window.Calendly) {
-        try {
-          console.log('Initializing Calendly widget...');
-          const widgetElement = document.querySelector('.calendly-inline-widget');
-          if (widgetElement) {
-            // Clear any existing content
-            widgetElement.innerHTML = '';
-            
-            window.Calendly.initInlineWidget({
-              url: 'https://calendly.com/marcsdigitalsolutions-info',
-              parentElement: widgetElement,
-              prefill: {},
-              utm: {}
-            });
-            console.log('Calendly widget initialized');
-            setIsCalendlyLoaded(true);
-          } else {
-            console.error('Widget element not found');
-            setIsCalendlyLoaded(true);
-          }
-        } catch (error) {
-          console.error('Error initializing Calendly widget:', error);
+      try {
+        const widgetElement = document.querySelector('.calendly-inline-widget');
+        if (widgetElement && window.Calendly) {
+          widgetElement.innerHTML = '';
+          window.Calendly.initInlineWidget({
+            url: 'https://calendly.com/marcsdigitalsolutions-info',
+            parentElement: widgetElement,
+            prefill: {},
+            utm: {}
+          });
+          console.log('Calendly widget initialized successfully');
           setIsCalendlyLoaded(true);
         }
-      } else {
-        console.error('Calendly not available');
+      } catch (error) {
+        console.error('Error initializing Calendly widget:', error);
+        createCalendlyIframe();
+      }
+    };
+
+    const createCalendlyIframe = () => {
+      console.log('Creating Calendly iframe as fallback');
+      const widgetElement = document.querySelector('.calendly-inline-widget');
+      if (widgetElement) {
+        widgetElement.innerHTML = `
+          <iframe 
+            src="https://calendly.com/marcsdigitalsolutions-info" 
+            width="100%" 
+            height="700" 
+            frameborder="0"
+            style="border: 1px solid hsl(var(--border)); border-radius: 12px;"
+          ></iframe>
+        `;
         setIsCalendlyLoaded(true);
       }
     };
-
-    loadCalendly();
     
     return () => {
       // Clean up
       const scripts = document.head.querySelectorAll('script[src*="calendly"]');
       scripts.forEach(script => script.remove());
+      const links = document.head.querySelectorAll('link[href*="calendly"]');
+      links.forEach(link => link.remove());
     };
   }, []);
   
@@ -123,10 +123,7 @@ const BookingPage = () => {
             }`}
             style={{ 
               minWidth: '320px', 
-              height: isCalendlyLoaded ? '700px' : '0px',
-              border: isCalendlyLoaded ? '1px solid hsl(var(--border))' : 'none',
-              borderRadius: '12px',
-              overflow: 'hidden'
+              height: isCalendlyLoaded ? '700px' : '0px'
             }}
           ></div>
         </div>
@@ -134,5 +131,14 @@ const BookingPage = () => {
     </main>
   );
 };
+
+// Extend Window interface to include Calendly
+declare global {
+  interface Window {
+    Calendly?: {
+      initInlineWidget: (options: any) => void;
+    };
+  }
+}
 
 export default BookingPage;

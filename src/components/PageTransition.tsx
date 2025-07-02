@@ -15,11 +15,11 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
     if (location !== displayLocation) {
       setIsTransitioning(true);
       
-      // Show transition for 3 seconds
+      // Show transition for 1.5 seconds
       const transitionTimer = setTimeout(() => {
         setDisplayLocation(location);
         setIsTransitioning(false);
-      }, 3000);
+      }, 1500);
 
       return () => clearTimeout(transitionTimer);
     }
