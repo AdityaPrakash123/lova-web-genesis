@@ -12,7 +12,6 @@ declare global {
 
 const BookingPage = () => {
   const [isCalendlyLoaded, setIsCalendlyLoaded] = useState(false);
-  const [isScriptLoaded, setIsScriptLoaded] = useState(false);
 
   useEffect(() => {
     document.title = "Book a Consultation - MARCS DIGITAL Solutions";
@@ -21,7 +20,6 @@ const BookingPage = () => {
       // Check if Calendly is already loaded
       if (window.Calendly) {
         console.log('Calendly already available');
-        setIsScriptLoaded(true);
         initializeCalendlyWidget();
         return;
       }
@@ -33,15 +31,16 @@ const BookingPage = () => {
       
       script.onload = () => {
         console.log('Calendly script loaded successfully');
-        setIsScriptLoaded(true);
         // Small delay to ensure Calendly is fully initialized
         setTimeout(() => {
           initializeCalendlyWidget();
-        }, 100);
+        }, 500);
       };
       
       script.onerror = () => {
         console.error('Failed to load Calendly script');
+        // Set as loaded even on error to hide loading screen
+        setIsCalendlyLoaded(true);
       };
       
       document.head.appendChild(script);
@@ -53,6 +52,9 @@ const BookingPage = () => {
           console.log('Initializing Calendly widget...');
           const widgetElement = document.querySelector('.calendly-inline-widget');
           if (widgetElement) {
+            // Clear any existing content
+            widgetElement.innerHTML = '';
+            
             window.Calendly.initInlineWidget({
               url: 'https://calendly.com/marcsdigitalsolutions-info',
               parentElement: widgetElement,
@@ -61,29 +63,23 @@ const BookingPage = () => {
             });
             console.log('Calendly widget initialized');
             
-            // Wait a bit longer to ensure the widget content is loaded
+            // Set a reasonable timeout to hide loading screen
             setTimeout(() => {
-              // Check if the widget has content
-              const widgetContent = widgetElement.querySelector('iframe');
-              if (widgetContent) {
-                console.log('Calendly widget content loaded');
-                setIsCalendlyLoaded(true);
-              } else {
-                // Fallback: assume loaded after a reasonable delay
-                setTimeout(() => {
-                  console.log('Calendly widget assumed loaded (fallback)');
-                  setIsCalendlyLoaded(true);
-                }, 2000);
-              }
-            }, 1000);
+              console.log('Calendly widget loading complete');
+              setIsCalendlyLoaded(true);
+            }, 2000);
+          } else {
+            console.error('Widget element not found');
+            setIsCalendlyLoaded(true);
           }
         } catch (error) {
           console.error('Error initializing Calendly widget:', error);
           // Still set as loaded to hide loading screen
-          setTimeout(() => {
-            setIsCalendlyLoaded(true);
-          }, 3000);
+          setIsCalendlyLoaded(true);
         }
+      } else {
+        console.error('Calendly not available');
+        setIsCalendlyLoaded(true);
       }
     };
 
@@ -125,9 +121,7 @@ const BookingPage = () => {
                 </div>
                 <div className="space-y-2">
                   <p className="text-lg font-medium text-foreground">Loading Calendar...</p>
-                  <p className="text-sm text-muted-foreground">
-                    {!isScriptLoaded ? 'Initializing Calendly...' : 'Setting up your booking interface...'}
-                  </p>
+                  <p className="text-sm text-muted-foreground">Setting up your booking interface...</p>
                 </div>
               </div>
             </div>
