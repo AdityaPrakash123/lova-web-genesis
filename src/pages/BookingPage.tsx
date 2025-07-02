@@ -11,10 +11,17 @@ declare global {
 }
 
 const BookingPage = () => {
-  const [isCalendlyLoaded, setIsCalendlyLoaded] = useState(false);
+  const [showTransition, setShowTransition] = useState(true);
 
   useEffect(() => {
     document.title = "Book a Consultation - MARCS DIGITAL Solutions";
+    
+    // Show transition for exactly 1.5 seconds
+    const transitionTimer = setTimeout(() => {
+      setShowTransition(false);
+      // Load Calendly after transition
+      loadCalendly();
+    }, 1500);
     
     const loadCalendly = () => {
       // Check if Calendly is already loaded
@@ -39,8 +46,6 @@ const BookingPage = () => {
       
       script.onerror = () => {
         console.error('Failed to load Calendly script');
-        // Set as loaded even on error to hide loading screen
-        setIsCalendlyLoaded(true);
       };
       
       document.head.appendChild(script);
@@ -62,30 +67,19 @@ const BookingPage = () => {
               utm: {}
             });
             console.log('Calendly widget initialized');
-            
-            // Set a reasonable timeout to hide loading screen
-            setTimeout(() => {
-              console.log('Calendly widget loading complete');
-              setIsCalendlyLoaded(true);
-            }, 2000);
           } else {
             console.error('Widget element not found');
-            setIsCalendlyLoaded(true);
           }
         } catch (error) {
           console.error('Error initializing Calendly widget:', error);
-          // Still set as loaded to hide loading screen
-          setIsCalendlyLoaded(true);
         }
       } else {
         console.error('Calendly not available');
-        setIsCalendlyLoaded(true);
       }
     };
-
-    loadCalendly();
     
     return () => {
+      clearTimeout(transitionTimer);
       // Clean up
       const scripts = document.head.querySelectorAll('script[src*="calendly"]');
       scripts.forEach(script => script.remove());
@@ -109,7 +103,7 @@ const BookingPage = () => {
       {/* Calendly integration */}
       <section className="container-section">
         <div className="max-w-4xl mx-auto">
-          {!isCalendlyLoaded && (
+          {showTransition && (
             <div className="flex items-center justify-center py-12">
               <div className="text-center">
                 <div className="mb-6">
@@ -128,12 +122,12 @@ const BookingPage = () => {
           )}
           <div 
             className={`calendly-inline-widget transition-opacity duration-500 ${
-              isCalendlyLoaded ? 'opacity-100' : 'opacity-0 absolute'
+              showTransition ? 'opacity-0 absolute' : 'opacity-100'
             }`}
             style={{ 
               minWidth: '320px', 
               height: '700px',
-              border: isCalendlyLoaded ? '1px solid hsl(var(--border))' : 'none',
+              border: showTransition ? 'none' : '1px solid hsl(var(--border))',
               borderRadius: '12px',
               overflow: 'hidden'
             }}
