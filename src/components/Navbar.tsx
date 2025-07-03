@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Moon, Sun } from 'lucide-react';
+import { useLoadingNavigation } from '@/hooks/useLoadingNavigation';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,6 +14,8 @@ const Navbar = () => {
     }
     return false;
   });
+
+  const navigateWithLoading = useLoadingNavigation();
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -33,6 +36,11 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleNavigation = (path: string) => {
+    navigateWithLoading(path);
+    setIsMenuOpen(false);
+  };
+
   const menuItems = [
     { title: 'Home', path: '/' },
     { title: 'Services', path: '/services' }
@@ -43,23 +51,23 @@ const Navbar = () => {
       <div className="container max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">
-          <Link to="/" className="flex items-center gap-2">
+          <button onClick={() => handleNavigation('/')} className="flex items-center gap-2">
             <span className="text-xl md:text-2xl font-bold">
               MARCS <span className="text-primary">DIGITAL SOLUTIONS</span>
             </span>
-          </Link>
+          </button>
         </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
           {menuItems.map((item) => (
-            <Link
+            <button
               key={item.title}
-              to={item.path}
+              onClick={() => handleNavigation(item.path)}
               className="text-base font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
               {item.title}
-            </Link>
+            </button>
           ))}
           
           <button
@@ -74,9 +82,7 @@ const Navbar = () => {
             )}
           </button>
           
-          <Link to="/book">
-            <Button className="btn-primary">Let's Talk</Button>
-          </Link>
+          <Button onClick={() => handleNavigation('/book')} className="btn-primary">Let's Talk</Button>
         </nav>
 
         {/* Mobile menu button */}
@@ -107,18 +113,15 @@ const Navbar = () => {
         <div className="md:hidden border-t bg-background">
           <div className="container px-4 py-6 flex flex-col gap-4">
             {menuItems.map((item) => (
-              <Link
+              <button
                 key={item.title}
-                to={item.path}
-                onClick={() => setIsMenuOpen(false)}
-                className="text-lg font-medium hover:text-primary transition-colors"
+                onClick={() => handleNavigation(item.path)}
+                className="text-lg font-medium hover:text-primary transition-colors text-left"
               >
                 {item.title}
-              </Link>
+              </button>
             ))}
-            <Link to="/book" onClick={() => setIsMenuOpen(false)}>
-              <Button className="btn-primary w-full">Let's Talk</Button>
-            </Link>
+            <Button onClick={() => handleNavigation('/book')} className="btn-primary w-full">Let's Talk</Button>
           </div>
         </div>
       )}
